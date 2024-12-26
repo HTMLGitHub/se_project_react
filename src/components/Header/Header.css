@@ -3,8 +3,7 @@
     padding: 32px 0 28px;
     display: flex;
     align-items: center;
-    font-family: 'Cabinet Grotesk Regular', sans-serif;
-    font-weight: 700;
+    font-family: 'Cabinet Grotesk Bold', sans-serif;
     font-size: 20px;
     line-height: 24px;
 }
@@ -33,15 +32,13 @@
     margin: 0;
 }
 
-
 .header__add-clothes-button {
     margin: 0 20px 0 auto;
     padding: 0;
     height: 24px;
     background-color: transparent;
     border: none;
-    font-family: 'Cabinet Grotesk Regular', sans-serif;
-    font-weight: 700;
+    font-family: 'Cabinet Grotesk Bold', sans-serif;
     font-size: 20px;
     line-height: 24px;
 }

@@ -1,14 +1,20 @@
+import { useState } from 'react'
+
 import './App.css'
 import Header from '../Header/Header'
-import Footer from '../Footer/Footer'
 import Main from '../Main/Main'
+import Footer from '../Footer/Footer'
+
+
 
 export default function App() {
+  const [weatherData, setWeatherData] = useState({type: "cold"});
+
   return (
     <div className="app">
       <div className="app__content">
         <Header/>
-        <Main/>
+        <Main weatherData={weatherData}/>
         <Footer/>
       </div>
     </div>

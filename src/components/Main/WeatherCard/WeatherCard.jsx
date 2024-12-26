@@ -1,9 +1,11 @@
 import './WeatherCard.css';
+import sunny from '../../../assets/weather/daytime-clear.png';
+
 
 export default function WeatherCard() {
 return (
     <div className="weathercard__container">
-        <h3 className="weathercard__tempature">39&deg;F</h3>
-        <img src="" alt="" className="weathercard__image" />
+        <p className="weathercard__tempature">39&deg;&nbsp;F</p>
+        <img src={sunny} alt="sunshine" className="weathercard__image" />
     </div>
 );}
