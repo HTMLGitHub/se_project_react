@@ -1,0 +1,26 @@
+.weathercard__container {
+  padding: 0;
+  margin: 0 0 40px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #00a3ff;
+  border-radius: 5px;
+}
+
+.weathercard__tempature {
+  padding: 0;
+  margin: 20px 0 0 16px;
+  color : #fff;
+  height: 40px;
+  width: 69px;
+  font-family: 'Cabinet Grotesk Regular', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+}
+
+.weathercard__image {
+  padding: 0;
+  margin: 0;
+}
