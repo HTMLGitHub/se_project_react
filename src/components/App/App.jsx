@@ -1,4 +1,4 @@
-import { act, useState } from "react";
+import { act, useEffect, useState } from "react";
 
 import "./App.css";
 import Header from "../Header/Header";
@@ -6,13 +6,23 @@ import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import ItemModal from "../ItemModal/ItemModal";
+import { coordinates, apiKey } from "../../utils/constants";
+import { filterWeatherData, getWeather } from "../../utils/weatherApi";
 
 export default function App() {
-  const [weatherData, setWeatherData] = useState({ type: "cold" });
+  const [weatherData, setWeatherData] = useState({
+    type: "",
+    temp: { F: 999, C: 999 },
+    city: "",
+    description: "",
+    condition: "",
+    isDay: null,
+  });
+
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
 
-  const handleCardClick = (card) => { 
+  const handleCardClick = (card) => {
     setSelectedCard(card);
     setActiveModal("preview");
   };
@@ -25,11 +35,21 @@ export default function App() {
     setActiveModal("");
   };
 
+  useEffect(() => {
+    getWeather(coordinates, apiKey)
+      .then((data) => {
+        const filteredData = filterWeatherData(data);
+        setWeatherData(filteredData);
+        console.log(filteredData.type);
+      })
+      .catch(console.error);
+  }, []);
+
   return (
     <div className="app">
       <div className="app__content">
-        <Header handleAddClick={handleAddClick} />
-        <Main weatherData={weatherData} handleCardClick={handleCardClick}/>
+        <Header handleAddClick={handleAddClick} weatherData={weatherData} />
+        <Main weatherData={weatherData} handleCardClick={handleCardClick} />
         <Footer />
       </div>
       <ModalWithForm
@@ -89,7 +109,11 @@ export default function App() {
         </fieldset>
       </ModalWithForm>
 
-      <ItemModal activeModal={activeModal} card={selectedCard} closeActiveModal={closeActiveModal}/>
+      <ItemModal
+        activeModal={activeModal}
+        card={selectedCard}
+        closeActiveModal={closeActiveModal}
+      />
     </div>
   );
 }
