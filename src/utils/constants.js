@@ -1,3 +1,77 @@
+export const weatherConditions = [
+  {
+    day: true,
+    condition: "clear", 
+    url: new URL("../assets/weather/daytime-clear.png", import.meta.url).href,
+  },
+
+  {
+    day: true,
+    condition: "clouds", 
+    url: new URL("../assets/weather/daytime-cloudy.png", import.meta.url).href,
+  },
+
+  {
+    day: true,
+    condition: "thunderstorm", 
+    url: new URL("../assets/weather/daytime-lightning.png", import.meta.url).href,
+  },
+
+  {
+    day: true,
+    condition: "partly-cloudy", 
+    url: new URL("../assets/weather/daytime-partly-cloudy.png", import.meta.url).href,
+  },
+
+  {
+    day: true,
+    condition: "rain", 
+    url: new URL("../assets/weather/daytime-raining.png", import.meta.url).href,
+  },
+
+  {
+    day: true,
+    condition: "snow", 
+    url: new URL("../assets/weather/daytime-snowing.png", import.meta.url).href,
+  },
+
+  {
+    day: false,
+    condition: "clear", 
+    url: new URL("../assets/weather/dark-clear.png", import.meta.url).href,
+  },
+
+  {
+    day: false,
+    condition: "clouds", 
+    url: new URL("../assets/weather/dark-cloudy.png", import.meta.url).href,
+  },
+
+  {
+    day: false,
+    condition: "thunderstorm", 
+    url: new URL("../assets/weather/dark-lightning.png", import.meta.url).href,
+  },
+
+  {
+    day: false,
+    condition: "partly-cloudy", 
+    url: new URL("../assets/weather/dark-partly-cloudy.png", import.meta.url).href,
+  },
+
+  {
+    day: false,
+    condition: "rain", 
+    url: new URL("../assets/weather/dark-raining.png", import.meta.url).href,
+  },
+
+  {
+    day: false,
+    condition: "snow", 
+    url: new URL("../assets/weather/dark-snowing.png", import.meta.url).href,
+  },
+];
+
 export const defaultClothingItems = [
     {
       _id: 0,

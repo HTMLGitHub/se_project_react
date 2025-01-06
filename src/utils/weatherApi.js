@@ -15,7 +15,7 @@ export const filterWeatherData = (data) => {
   result.condition = data.weather[0].main.toLowerCase();
   result.type = getWeatherType(result.temp.F);
 
-  result.isDay= isItDayTime(data.sys, Date.now());
+  result.isDay = isItDayTime(data.sys, Date.now());
   return result;
 };
 
@@ -25,6 +25,6 @@ const getWeatherType = (tempature) => {
   else return "cold";
 };
 
-const isItDayTime = ({sunrise, sunset}, now) => {
+const isItDayTime = ({ sunrise, sunset }, now) => {
   return sunrise * 1000 < now && now < sunset * 1000;
-}
+};

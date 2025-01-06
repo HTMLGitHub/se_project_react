@@ -16,7 +16,7 @@ export default function App() {
     city: "",
     description: "",
     condition: "",
-    isDay: null,
+    isDay: true,
   });
 
   const [activeModal, setActiveModal] = useState("");
@@ -40,7 +40,7 @@ export default function App() {
       .then((data) => {
         const filteredData = filterWeatherData(data);
         setWeatherData(filteredData);
-        console.log(filteredData.type);
+        console.log(filteredData);
       })
       .catch(console.error);
   }, []);
