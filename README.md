@@ -24,7 +24,7 @@ If the user clicks on the clothing a popup showing an enlarged image of the clot
 This project was created with HTML, CSS, JS, and React. With the visual being from Figma. 
 
 *GitHub*
-https://htmlgithub.github.io/se_project_react/
+- [Link to GitHub Project](https://htmlgithub.github.io/se_project_react/)
 
 ## Improvements
 
