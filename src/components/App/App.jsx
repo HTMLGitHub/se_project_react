@@ -56,6 +56,7 @@ export default function App() {
         title="New Garment"
         buttonText="Add garment"
         activeModal={activeModal}
+        modalName="add-garment"
         closeActiveModal={closeActiveModal}
       >
         <label htmlFor="name" className="modal__label">
