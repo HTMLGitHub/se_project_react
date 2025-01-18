@@ -1,18 +1,24 @@
 import "./Header.css";
 import logo from "../../assets/logo.svg";
 import avatar from "../../assets/avatar.png";
+import Switch from "../Switch/Switch";
 
 export default function Header({ handleAddClick, weatherData }) {
   const currentDate = new Date().toLocaleString("default", {
     month: "long",
     day: "numeric",
   });
+
+  const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState('F');
+
   return (
     <header className="header">
       <img src={logo} alt="logo" className="header__logo"></img>
       <div className="header__datelocation">
         {currentDate}, {weatherData.city}
       </div>
+
+      <Switch temperatureUnit={value} handleToggle={()=> setCurrentTemperatureUnit(!value)}/>
 
       <button
         onClick={handleAddClick}
