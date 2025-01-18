@@ -1,4 +1,5 @@
 import "./Header.css";
+import { useState } from "react";
 import logo from "../../assets/logo.svg";
 import avatar from "../../assets/avatar.png";
 import Switch from "../Switch/Switch";
@@ -18,7 +19,7 @@ export default function Header({ handleAddClick, weatherData }) {
         {currentDate}, {weatherData.city}
       </div>
 
-      <Switch temperatureUnit={value} handleToggle={()=> setCurrentTemperatureUnit(!value)}/>
+      <Switch temperatureUnit={currentTemperatureUnit} handleToggle={()=> setCurrentTemperatureUnit(!currentTemperatureUnit)}/>
 
       <button
         onClick={handleAddClick}
