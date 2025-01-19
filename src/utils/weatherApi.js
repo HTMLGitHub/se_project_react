@@ -8,8 +8,8 @@ export const filterWeatherData = (data) => {
   const result = {};
   result.city = data.name;
   result.temp = {
-    F: data.main.temp,
-    C: ((data.main.temp - 32) * 5) / 9,
+    F: (data.main.temp).toFixed(2),
+    C: (((data.main.temp - 32) * 5) / 9).toFixed(2),
   };
   result.description = data.weather[0].description;
   result.condition = data.weather[0].main.toLowerCase();

@@ -1,5 +1,4 @@
 import { act, useEffect, useState } from "react";
-
 import "./App.css";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
@@ -8,8 +7,11 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import ItemModal from "../ItemModal/ItemModal";
 import { coordinates, apiKey } from "../../utils/constants";
 import { filterWeatherData, getWeather } from "../../utils/weatherApi";
+import CurrentTemperatureUnitContext from "../../Contexts/CurrentTemperatureUnitContext";
 
 export default function App() {
+  const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
+
   const [weatherData, setWeatherData] = useState({
     type: "",
     temp: { F: 999, C: 999 },
@@ -31,6 +33,10 @@ export default function App() {
     setActiveModal("add-garment");
   };
 
+  const handleToggleSwitchChange = () => {
+    setCurrentTemperatureUnit((prevTemp) => (prevTemp === "F" ? "C" : "F"));
+  };
+
   const closeActiveModal = () => {
     setActiveModal("");
   };
@@ -48,8 +54,12 @@ export default function App() {
   return (
     <div className="app">
       <div className="app__content">
-        <Header handleAddClick={handleAddClick} weatherData={weatherData} />
-        <Main weatherData={weatherData} handleCardClick={handleCardClick} />
+        <CurrentTemperatureUnitContext.Provider
+          value={{ currentTemperatureUnit, handleToggleSwitchChange }}
+        >
+          <Header handleAddClick={handleAddClick} weatherData={weatherData} />
+          <Main weatherData={weatherData} handleCardClick={handleCardClick} />
+        </CurrentTemperatureUnitContext.Provider>
         <Footer />
       </div>
       <ModalWithForm
