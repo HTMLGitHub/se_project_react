@@ -7,7 +7,7 @@ export default function WeatherCard({ weatherData }) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
   const weatherCondition = weatherConditions.filter((condition) => {
             return (
-            condition.condition === weatherData.condition &&
+            condition.condition.includes(weatherData.condition) &&
             condition.day === weatherData.isDay
             );
         }

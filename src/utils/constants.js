@@ -19,7 +19,7 @@ export const weatherConditions = [
 
   {
     day: true,
-    condition: "mist", 
+    condition: ["mist", "fog", "partly-cloudy"], 
     url: new URL("../assets/weather/daytime-partly-cloudy.png", import.meta.url).href,
   },
 
@@ -55,7 +55,7 @@ export const weatherConditions = [
 
   {
     day: false,
-    condition: "mist", 
+    condition: ["mist", "fog", "partly-cloudy"], 
     url: new URL("../assets/weather/dark-partly-cloudy.png", import.meta.url).href,
   },
 
