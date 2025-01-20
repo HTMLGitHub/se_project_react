@@ -17,6 +17,7 @@ export default function WeatherCard({ weatherData }) {
     <div className="weathercard__container">
       <p className="weathercard__tempature">{weatherData.temp[currentTemperatureUnit]}&deg;{currentTemperatureUnit}</p>{" "}
       <img src={weatherCondition[0]?.url} alt={weatherData.condition} className="weathercard__image" />
+      {console.log(weatherCondition[0]?.url)}
     </div>
   );
 }

@@ -1,4 +1,5 @@
-import { act, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
@@ -8,6 +9,7 @@ import ItemModal from "../ItemModal/ItemModal";
 import { coordinates, apiKey } from "../../utils/constants";
 import { filterWeatherData, getWeather } from "../../utils/weatherApi";
 import CurrentTemperatureUnitContext from "../../Contexts/CurrentTemperatureUnitContext";
+import Profile from "../Profile/Profile";
 
 export default function App() {
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
@@ -58,8 +60,20 @@ export default function App() {
           value={{ currentTemperatureUnit, handleToggleSwitchChange }}
         >
           <Header handleAddClick={handleAddClick} weatherData={weatherData} />
-          <Main weatherData={weatherData} handleCardClick={handleCardClick} />
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Main
+                  weatherData={weatherData}
+                  handleCardClick={handleCardClick}
+                />
+              }
+            />
+            <Route path="/profile" element={<Profile />} />
+          </Routes>
         </CurrentTemperatureUnitContext.Provider>
+
         <Footer />
       </div>
       <ModalWithForm
