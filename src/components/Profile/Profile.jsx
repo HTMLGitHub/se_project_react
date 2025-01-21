@@ -1,9 +1,16 @@
+import ClothesSection from './ClothesSection/ClothesSection';
 import './Profile.css';
+import Sidebar from './Sidebar/Sidebar';
 
 export default function Profile () {
     return (
         <div className="profile">
-            <h1>Hello World</h1>
+            <section className="profile__sidebar">
+                <Sidebar/>
+            </section>
+            <section className="profile__clothesSection">
+                <ClothesSection/>
+            </section>
         </div>
     );
 };

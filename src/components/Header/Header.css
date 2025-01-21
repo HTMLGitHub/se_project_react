@@ -33,13 +33,18 @@
   line-height: 24px;
 }
 
+.header__link {
+  text-decoration: none;
+  color: inherit;
+}
+
 .header__user-container {
   padding: 0;
   margin: 0;
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 88px;
+  gap: 12px;
 }
 
 .header__user-name {

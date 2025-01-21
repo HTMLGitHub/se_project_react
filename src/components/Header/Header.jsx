@@ -15,7 +15,7 @@ export default function Header({ handleAddClick, weatherData }) {
 
   return (
     <header className="header">
-      <Link to="/">
+      <Link to="/" className="header__link">
         <img src={logo} alt="logo" className="header__logo"></img>
       </Link>
       <div className="header__datelocation">
@@ -34,16 +34,17 @@ export default function Header({ handleAddClick, weatherData }) {
       >
         + Add Clothes
       </button>
-      <div className="header__user-container">
-        <Link to="/profile">
+
+      <Link to="/profile" className="header__link">
+        <div className="header__user-container">
           <p className="header__user-name">Terrence Tegegne</p>
           <img
             src={avatar}
             alt="Terrence Tegegne"
             className="header__user-avatar"
           ></img>
-        </Link>
-      </div>
+        </div>
+      </Link>
     </header>
   );
 }
