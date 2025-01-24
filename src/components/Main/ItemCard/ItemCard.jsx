@@ -1,3 +1,5 @@
+import React from "react";
+import PropTypes from "prop-types";
 import "./ItemCard.css";
 
 export default function ItemCard({ card, onCardClick }) {
@@ -13,5 +15,13 @@ export default function ItemCard({ card, onCardClick }) {
         alt={card.name}
       />
     </li>
-  );
+  )
 }
+
+ItemCard.propTypes = {
+  card: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    link: PropTypes.string.isRequired,
+  }).isRequired,
+  onCardClick: PropTypes.func.isRequired,
+};

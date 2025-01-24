@@ -1,3 +1,4 @@
+import React from 'react';
 import ClothesSection from './ClothesSection/ClothesSection';
 import './Profile.css';
 import Sidebar from './Sidebar/Sidebar';

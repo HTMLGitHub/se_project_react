@@ -1,3 +1,5 @@
+import React from "react";
+import PropTypes from "prop-types";
 import "./Main.css";
 import WeatherCard from "./WeatherCard/WeatherCard";
 import { useContext } from "react";
@@ -26,5 +28,13 @@ export default function Main({ weatherData, handleCardClick }) {
         </ul>
       </section>
     </main>
-  );
+  )
 }
+
+Main.propTypes = {
+  weatherData: PropTypes.shape({
+    temp: PropTypes.object.isRequired,
+    type: PropTypes.string.isRequired,
+  }).isRequired,
+  handleCardClick: PropTypes.func.isRequired,
+};

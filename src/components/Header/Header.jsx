@@ -1,5 +1,7 @@
+import React from "react";
 import "./Header.css";
 import { useState } from "react";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.svg";
 import avatar from "../../assets/avatar.png";
@@ -46,5 +48,12 @@ export default function Header({ handleAddClick, weatherData }) {
         </div>
       </Link>
     </header>
-  );
+  )
 }
+
+Header.propTypes = {
+  handleAddClick: PropTypes.func.isRequired,
+  weatherData: PropTypes.shape({
+    city: PropTypes.string.isRequired,
+  }).isRequired,
+};

@@ -1,15 +1,16 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
-import ModalWithForm from "../ModalWithForm/ModalWithForm";
+
 import ItemModal from "../ItemModal/ItemModal";
 import { coordinates, apiKey } from "../../utils/constants";
 import { filterWeatherData, getWeather } from "../../utils/weatherApi";
 import CurrentTemperatureUnitContext from "../../Contexts/CurrentTemperatureUnitContext";
 import Profile from "../Profile/Profile";
+import AddItemModal from "../AddItemModal/AddItemModal";
 
 export default function App() {
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
@@ -48,7 +49,6 @@ export default function App() {
       .then((data) => {
         const filteredData = filterWeatherData(data);
         setWeatherData(filteredData);
-        console.log(filteredData);
       })
       .catch(console.error);
   }, []);
@@ -76,63 +76,10 @@ export default function App() {
 
         <Footer />
       </div>
-      <ModalWithForm
-        title="New Garment"
-        buttonText="Add garment"
-        activeModal={activeModal}
-        modalName="add-garment"
+      <AddItemModal
         closeActiveModal={closeActiveModal}
-      >
-        <label htmlFor="name" className="modal__label">
-          Name{" "}
-          <input
-            type="text"
-            className="modal__input"
-            id="name"
-            placeholder="Name"
-          />
-        </label>
-
-        <label htmlFor="imageURL" className="modal__label">
-          Image{" "}
-          <input
-            type="url"
-            className="modal__input"
-            id="imageURL"
-            placeholder="Image URL"
-          />
-        </label>
-        <fieldset className="modal__radio-buttons">
-          <legend className="modal__legend">Select the weather type</legend>
-          <div className="modal__radio-button">
-            <label
-              htmlFor="hot"
-              className="modal__label modal__label_type_radio"
-            >
-              <input type="radio" name="weather" id="hot" value="Hot" />
-              Hot
-            </label>
-          </div>
-          <div className="modal__radio-button">
-            <label
-              htmlFor="warm"
-              className="modal__label modal__label_type_radio"
-            >
-              <input type="radio" name="weather" id="warm" value="Warm" />
-              Warm
-            </label>
-          </div>
-          <div className="modal__radio-button">
-            <label
-              htmlFor="cold"
-              className="modal__label modal__label_type_radio"
-            >
-              <input type="radio" name="weather" id="cold" value="Cold" />
-              Cold
-            </label>
-          </div>
-        </fieldset>
-      </ModalWithForm>
+        activeModal={activeModal}
+      />
 
       <ItemModal
         activeModal={activeModal}
