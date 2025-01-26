@@ -6,7 +6,11 @@ import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
 
 import ItemModal from "../ItemModal/ItemModal";
-import { coordinates, apiKey } from "../../utils/constants";
+import {
+  coordinates,
+  apiKey,
+  defaultClothingItems,
+} from "../../utils/constants";
 import { filterWeatherData, getWeather } from "../../utils/weatherApi";
 import CurrentTemperatureUnitContext from "../../Contexts/CurrentTemperatureUnitContext";
 import Profile from "../Profile/Profile";
@@ -14,7 +18,9 @@ import AddItemModal from "../AddItemModal/AddItemModal";
 
 export default function App() {
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
-
+  const [activeModal, setActiveModal] = useState("");
+  const [selectedCard, setSelectedCard] = useState({});
+  const [clothingItems, setClothingItems] = useState(defaultClothingItems);
   const [weatherData, setWeatherData] = useState({
     type: "",
     temp: { F: 999, C: 999 },
@@ -24,8 +30,16 @@ export default function App() {
     isDay: true,
   });
 
-  const [activeModal, setActiveModal] = useState("");
-  const [selectedCard, setSelectedCard] = useState({});
+  const handleAddItemModal = ({ name, imageUrl, weatherType }) => {
+    const newID = clothingItems.length;
+
+    setClothingItems((oldClothes) => [
+      ...oldClothes,
+      { _id: newID, name: name, weather: weatherType, link: imageUrl },
+    ]);
+    // close the modal
+    closeActiveModal();
+  };
 
   const handleCardClick = (card) => {
     setSelectedCard(card);
@@ -67,6 +81,7 @@ export default function App() {
                 <Main
                   weatherData={weatherData}
                   handleCardClick={handleCardClick}
+                  clothingItems={clothingItems}
                 />
               }
             />
@@ -79,6 +94,7 @@ export default function App() {
       <AddItemModal
         closeActiveModal={closeActiveModal}
         activeModal={activeModal}
+        onAddItemModal={handleAddItemModal}
       />
 
       <ItemModal

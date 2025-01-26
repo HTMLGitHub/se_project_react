@@ -10,6 +10,7 @@ export default function ModalWithForm({
   activeModal,
   modalName,
   closeActiveModal,
+  onSubmit,
 }) {
   
   return (
@@ -23,7 +24,7 @@ export default function ModalWithForm({
         >
           <img src={closeIcon} alt="close" className="modal__close-icon" />
         </button>
-        <form className="modal__form">
+        <form onSubmit={onSubmit} className="modal__form">
           {children}
           <button type="submit" className="modal__submit">
             {buttonText}
@@ -41,5 +42,6 @@ ModalWithForm.propTypes = {
   activeModal: PropTypes.string.isRequired,
   modalName: PropTypes.string.isRequired,
   closeActiveModal: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
 };
 
