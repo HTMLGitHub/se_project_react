@@ -38,7 +38,7 @@ Main.propTypes = {
   handleCardClick: PropTypes.func.isRequired,
   clothingItems: PropTypes.arrayOf(
     PropTypes.shape({
-      _id: PropTypes.string.isRequired,
+      _id: PropTypes.number.isRequired,
       weather: PropTypes.string.isRequired,
     })
   ).isRequired,

@@ -28,9 +28,9 @@ export default function ItemModal({ activeModal, card, closeActiveModal }) {
 ItemModal.propTypes = {
   activeModal: PropTypes.string.isRequired,
   card: PropTypes.shape({
-    link: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    weather: PropTypes.string.isRequired,
-  }).isRequired,
+    link: PropTypes.string,
+    name: PropTypes.string,
+    weather: PropTypes.string,
+  }),
   closeActiveModal: PropTypes.func.isRequired,
 };
