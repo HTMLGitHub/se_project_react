@@ -1,6 +1,7 @@
 .modal__container_preview {
     overflow: hidden;
-    padding: 0;
+    position: relative;
+    padding: 0 !important;
 }
 
 .modal__image {
@@ -28,4 +29,19 @@
 .modal__weather {
     margin: 0;
     padding: 0 auto 0 0;
+}
+
+.modal__delete_button {
+    border: none;
+    background-color: transparent;
+    position: absolute;
+    bottom: 68px;
+    right: 32px;
+    font-family: "Cabinet Grotesk Bold", sans-serif;
+    font-size: 20px;
+    line-height: 24px;
+    padding: 0;
+    margin: 0;
+    color: #ff4d00;
+
 }

@@ -11,8 +11,8 @@ export default function AddItemModal({ closeActiveModal, activeModal, onAddItemM
   useEffect(()=> {
     if(activeModal==="add-garment") {
       setName("");
-      imageUrl("");
-      weatherType("");
+      setImageUrl("");
+      setWeatherType("");
     }
   },[activeModal]);
 

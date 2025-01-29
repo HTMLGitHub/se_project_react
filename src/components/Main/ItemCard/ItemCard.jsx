@@ -11,7 +11,7 @@ export default function ItemCard({ card, onCardClick }) {
           onCardClick(card);
         }}
         className="itemcard__image"
-        src={card.link}
+        src={card.imageUrl}
         alt={card.name}
       />
     </li>
@@ -20,8 +20,8 @@ export default function ItemCard({ card, onCardClick }) {
 
 ItemCard.propTypes = {
   card: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    link: PropTypes.string.isRequired,
-  }).isRequired,
-  onCardClick: PropTypes.func.isRequired,
+    name: PropTypes.string,
+    imageUrl: PropTypes.string,
+  }),
+  onCardClick: PropTypes.func,
 };

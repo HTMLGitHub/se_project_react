@@ -6,21 +6,18 @@ import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
 
 import ItemModal from "../ItemModal/ItemModal";
-import {
-  coordinates,
-  apiKey,
-  defaultClothingItems,
-} from "../../utils/constants";
+import { coordinates, apiKey } from "../../utils/constants";
 import { filterWeatherData, getWeather } from "../../utils/weatherApi";
 import CurrentTemperatureUnitContext from "../../Contexts/CurrentTemperatureUnitContext";
 import Profile from "../Profile/Profile";
 import AddItemModal from "../AddItemModal/AddItemModal";
+import { addItem, deleteItem, getItems } from "../../utils/api";
 
 export default function App() {
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
-  const [clothingItems, setClothingItems] = useState(defaultClothingItems);
+  const [clothingItems, setClothingItems] = useState([]);
   const [weatherData, setWeatherData] = useState({
     type: "",
     temp: { F: 999, C: 999 },
@@ -33,12 +30,17 @@ export default function App() {
   const handleAddItemModal = ({ name, imageUrl, weatherType }) => {
     const newID = clothingItems.length;
 
-    setClothingItems((oldClothes) => [
-      ...oldClothes,
-      { _id: newID, name: name, weather: weatherType, link: imageUrl },
-    ]);
-    // close the modal
-    closeActiveModal();
+    addItem({ _id: newID, name, weather: weatherType, imageUrl})
+      .then((data) => {
+        console.log(data);
+        setClothingItems((oldClothes) => [
+          ...oldClothes,
+          { _id: newID, name: name, weather: weatherType, imageUrl: imageUrl },
+        ]);
+        // close the modal
+        closeActiveModal();
+      })
+      .catch(console.error);
   };
 
   const handleCardClick = (card) => {
@@ -54,6 +56,18 @@ export default function App() {
     setCurrentTemperatureUnit((prevTemp) => (prevTemp === "F" ? "C" : "F"));
   };
 
+  const handleDeleteItem = (id) => {
+    deleteItem(id)
+      .then((data) => {
+        console.log(data);
+        setClothingItems((oldClothes) =>
+          oldClothes.filter((item) => item._id !== id)
+        );
+        closeActiveModal();
+      })
+      .catch(console.error);
+  };
+
   const closeActiveModal = () => {
     setActiveModal("");
   };
@@ -62,7 +76,23 @@ export default function App() {
     getWeather(coordinates, apiKey)
       .then((data) => {
         const filteredData = filterWeatherData(data);
-        setWeatherData(filteredData);
+
+        setWeatherData({
+          ...filteredData,
+          temp: {
+            F: Number(filteredData.temp.F),
+            C: Number(filteredData.temp.C),
+          },
+        });
+      })
+      .catch(console.error);
+  }, []);
+
+  useEffect(() => {
+    getItems()
+      .then((data) => {
+        console.log(data);
+        setClothingItems(data);
       })
       .catch(console.error);
   }, []);
@@ -85,7 +115,15 @@ export default function App() {
                 />
               }
             />
-            <Route path="/profile" element={<Profile />} />
+            <Route
+              path="/profile"
+              element={
+                <Profile
+                  clothingItems={clothingItems}
+                  handleAddClick={handleAddClick}
+                />
+              }
+            />
           </Routes>
         </CurrentTemperatureUnitContext.Provider>
 
@@ -101,6 +139,7 @@ export default function App() {
         activeModal={activeModal}
         card={selectedCard}
         closeActiveModal={closeActiveModal}
+        onDeleteItem={handleDeleteItem}
       />
     </div>
   );
