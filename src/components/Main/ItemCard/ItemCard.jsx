@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import "./ItemCard.css";
 
 export default function ItemCard({ card, onCardClick }) {
+  console.log(`onCardClick in ItemCard: ${onCardClick}`);
   return (
     <li className="itemcard__container">
       <h2 className="itemcard__name">{card.name}</h2>

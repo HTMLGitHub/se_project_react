@@ -6,8 +6,10 @@ import { useContext } from "react";
 import ItemCard from "./ItemCard/ItemCard";
 import CurrentTemperatureUnitContext from "../../Contexts/CurrentTemperatureUnitContext.js";
 
-export default function Main({ weatherData, handleCardClick, clothingItems }) {
+export default function Main({ weatherData, onCardClick, clothingItems }) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
+
+  console.log(`onCardClick in Main: ${onCardClick}`);
 
   return (
     <main className="main__content">
@@ -22,7 +24,8 @@ export default function Main({ weatherData, handleCardClick, clothingItems }) {
               return item.weather === weatherData.type;
             })
             .map((card) => {
-              return <ItemCard key={card._id} card={card} onCardClick={handleCardClick} />;
+              console.log(`Passing onCardClick from Main: ${onCardClick}`);
+              return <ItemCard key={card._id} card={card} onCardClick={onCardClick} />;
             })}
         </ul>
       </section>
@@ -35,7 +38,7 @@ Main.propTypes = {
     temp: PropTypes.object.isRequired,
     type: PropTypes.string.isRequired,
   }).isRequired,
-  handleCardClick: PropTypes.func.isRequired,
+  onCardClick: () => console.warn("onCardClick is not a provided"),
   clothingItems: PropTypes.arrayOf(
     PropTypes.shape({
       _id: PropTypes.number.isRequired,

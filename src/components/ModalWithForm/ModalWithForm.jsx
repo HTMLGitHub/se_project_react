@@ -11,6 +11,7 @@ export default function ModalWithForm({
   modalName,
   closeActiveModal,
   onSubmit,
+  isFormValid,
 }) {
   
   return (
@@ -26,7 +27,7 @@ export default function ModalWithForm({
         </button>
         <form onSubmit={onSubmit} className="modal__form">
           {children}
-          <button type="submit" className="modal__submit">
+          <button type="submit" className="modal__submit" disabled={!isFormValid}>
             {buttonText}
           </button>
         </form>
@@ -43,5 +44,6 @@ ModalWithForm.propTypes = {
   modalName: PropTypes.string.isRequired,
   closeActiveModal: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
+  isFormValid: PropTypes.bool.isRequired,
 };
 

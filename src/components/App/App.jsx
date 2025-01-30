@@ -44,6 +44,7 @@ export default function App() {
   };
 
   const handleCardClick = (card) => {
+    if(!card) return;
     setSelectedCard(card);
     setActiveModal("preview");
   };
@@ -110,7 +111,7 @@ export default function App() {
               element={
                 <Main
                   weatherData={weatherData}
-                  handleCardClick={handleCardClick}
+                  onCardClick={handleCardClick}
                   clothingItems={clothingItems}
                 />
               }

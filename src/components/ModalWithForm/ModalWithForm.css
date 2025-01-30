@@ -63,6 +63,11 @@
 .modal__label {
   margin: 0;
   padding: 0;
+  color: black;
+}
+
+.modal__label_error {
+  color: red;
 }
 
 .modal__input {
@@ -87,20 +92,23 @@
   padding: 0;
 }
 
+.modal__error {
+  color: red;
+  margin: 0;
+  padding: 0;
+}
+
 .modal__label_type_radio {
   display: flex;
   align-items: center;
   margin: 0 0 8px 0;
   padding: 0;
   gap: 11px;
+  opacity: .5;
 }
 
-.modal__radio-button input[type="radio"] + .modal__label {
- opacity: 50%;
-}
-
-.modal__radio-button input[type="radio"]:checked + .modal__label {
-  opacity: 100%;
+.modal__button_checked{
+  opacity: 1;
 }
 
 
@@ -114,4 +122,14 @@
   cursor: pointer;
   width: 124px;
   height: 36px;
+}
+
+
+.modal__submit:hover {
+ opacity: 60%;
+}
+
+.modal__submit:disabled {
+ opacity: 30%;
+ cursor: not-allowed;
 }
