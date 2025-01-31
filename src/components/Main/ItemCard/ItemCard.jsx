@@ -23,5 +23,5 @@ ItemCard.propTypes = {
     name: PropTypes.string,
     imageUrl: PropTypes.string,
   }),
-  onCardClick: PropTypes.func,
+  onCardClick: PropTypes.func.isRequired,
 };

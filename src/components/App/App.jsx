@@ -119,6 +119,7 @@ export default function App() {
                 <Profile
                   clothingItems={clothingItems}
                   handleAddClick={handleAddClick}
+                  onCardClick={handleCardClick}
                 />
               }
             />

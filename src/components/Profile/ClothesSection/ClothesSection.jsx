@@ -4,7 +4,7 @@ import ItemCard from "../../Main/ItemCard/ItemCard";
 import React from "react";
 import PropTypes from 'prop-types';
 
-export default function ClothesSection({clothingItems, handleAddClick}) {
+export default function ClothesSection({clothingItems, handleAddClick, onCardClick}) {
   return (
     <div className="clothesSection">
       <div className="clothesSection__topper">
@@ -18,6 +18,7 @@ export default function ClothesSection({clothingItems, handleAddClick}) {
             <ItemCard
               key={card._id}
               card={card}
+              onCardClick={onCardClick}
             />
           );
         })}
@@ -27,9 +28,6 @@ export default function ClothesSection({clothingItems, handleAddClick}) {
 
 ClothesSection.propTypes = {
   clothingItems: PropTypes.arrayOf(PropTypes.object).isRequired,
-};
-
-ClothesSection.propTypes = {
-  clothingItems: PropTypes.arrayOf(PropTypes.object).isRequired,
   handleAddClick: PropTypes.func.isRequired,
+  onCardClick: PropTypes.func.isRequired,
 };
