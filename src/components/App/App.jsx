@@ -31,8 +31,7 @@ export default function App() {
     const newID = clothingItems.length;
 
     addItem({ _id: newID, name, weather: weatherType, imageUrl})
-      .then((data) => {
-        console.log(data);
+      .then(() => {
         setClothingItems((oldClothes) => [
           ...oldClothes,
           { _id: newID, name: name, weather: weatherType, imageUrl: imageUrl },
@@ -59,8 +58,7 @@ export default function App() {
 
   const handleDeleteItem = (id) => {
     deleteItem(id)
-      .then((data) => {
-        console.log(data);
+      .then(() => {
         setClothingItems((oldClothes) =>
           oldClothes.filter((item) => item._id !== id)
         );
@@ -92,7 +90,6 @@ export default function App() {
   useEffect(() => {
     getItems()
       .then((data) => {
-        console.log(data);
         setClothingItems(data);
       })
       .catch(console.error);
