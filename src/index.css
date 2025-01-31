@@ -1,2 +1,2 @@
 @import url('./vendor/normalize.css');
-@import url('./AddItemModal.css');
+@import url('../src/components/AddItemModal/AddItemModal.css');

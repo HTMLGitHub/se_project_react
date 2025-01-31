@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.svg";
 import avatar from "../../assets/avatar.png";
-import Switch from "../Switch/Switch";
+import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 
 export default function Header({ handleAddClick, weatherData }) {
   const currentDate = new Date().toLocaleString("default", {
@@ -24,7 +24,7 @@ export default function Header({ handleAddClick, weatherData }) {
         {currentDate}, {weatherData.city}
       </div>
 
-      <Switch
+      <ToggleSwitch
         temperatureUnit={currentTemperatureUnit}
         handleToggle={() => setCurrentTemperatureUnit(!currentTemperatureUnit)}
       />
