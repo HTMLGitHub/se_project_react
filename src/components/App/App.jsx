@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
+import { v4 } from 'uuid';
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
-
 import ItemModal from "../ItemModal/ItemModal";
 import { coordinates, apiKey } from "../../utils/constants";
 import { filterWeatherData, getWeather } from "../../utils/weatherApi";
@@ -28,7 +28,7 @@ export default function App() {
   });
 
   const handleAddItemModal = ({ name, imageUrl, weatherType }) => {
-    const newID = clothingItems.length;
+    const newID = v4();
 
     addItem({ _id: newID, name, weather: weatherType, imageUrl})
       .then(() => {
