@@ -14,14 +14,6 @@ export default function WeatherCard({ weatherData }) {
     );
   });
 
-  WeatherCard.propTypes = {
-    weatherData: PropTypes.shape({
-      condition: PropTypes.string.isRequired,
-      isDay: PropTypes.bool.isRequired,
-      temp: PropTypes.objectOf(PropTypes.number).isRequired,
-    }).isRequired,
-  };
-
    return (
     <div className="weathercard__container">
       <p className="weathercard__tempature">{weatherData.temp[currentTemperatureUnit]}&deg;{currentTemperatureUnit}</p>{" "}
@@ -29,3 +21,11 @@ export default function WeatherCard({ weatherData }) {
     </div>
   );
 }
+
+WeatherCard.propTypes = {
+  weatherData: PropTypes.shape({
+    condition: PropTypes.string.isRequired,
+    isDay: PropTypes.bool.isRequired,
+    temp: PropTypes.objectOf(PropTypes.number).isRequired,
+  }).isRequired,
+};

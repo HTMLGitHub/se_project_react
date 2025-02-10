@@ -5,12 +5,12 @@ import { v4 } from 'uuid';
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
-import ItemModal from "../ItemModal/ItemModal";
 import { coordinates, apiKey } from "../../utils/constants";
 import { filterWeatherData, getWeather } from "../../utils/weatherApi";
 import CurrentTemperatureUnitContext from "../../Contexts/CurrentTemperatureUnitContext";
 import Profile from "../Profile/Profile";
-import AddItemModal from "../AddItemModal/AddItemModal";
+import AddItemModal from "../Modal/AddItemModal/AddItemModal";
+import ItemModal from "../Modal/ItemModal/ItemModal";
 import { addItem, deleteItem, getItems } from "../../utils/api";
 
 export default function App() {
@@ -27,15 +27,20 @@ export default function App() {
     isDay: true,
   });
 
+  const [isSaving, setIsSaving] = useState(false);
+
   const handleAddItemModal = ({ name, imageUrl, weatherType }) => {
+    setIsSaving(true);
+
     const newID = v4();
 
     addItem({ _id: newID, name, weather: weatherType, imageUrl})
       .then(() => {
         setClothingItems((oldClothes) => [
-          ...oldClothes,
           { _id: newID, name: name, weather: weatherType, imageUrl: imageUrl },
+          ...oldClothes
         ]);
+        setIsSaving(false);
         // close the modal
         closeActiveModal();
       })
@@ -43,7 +48,8 @@ export default function App() {
   };
 
   const handleCardClick = (card) => {
-    if(!card) return;
+    if(!card)return;
+    
     setSelectedCard(card);
     setActiveModal("preview");
   };
@@ -132,6 +138,7 @@ export default function App() {
         closeActiveModal={closeActiveModal}
         activeModal={activeModal}
         onAddItemModal={handleAddItemModal}
+        isSaving={isSaving}
       />
 
       <ItemModal

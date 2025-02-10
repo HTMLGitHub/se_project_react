@@ -11,10 +11,11 @@ export default function Main({ weatherData, onCardClick, clothingItems }) {
 
   return (
     <main className="main__content">
-      <WeatherCard weatherData={weatherData}/>
+      <WeatherCard weatherData={weatherData} />
       <section className="main__container">
         <p className="main__text">
-          Today is {weatherData.temp[currentTemperatureUnit]}&deg;{currentTemperatureUnit} / You may want to wear:
+          Today is {weatherData.temp[currentTemperatureUnit]}&deg;
+          {currentTemperatureUnit} / You may want to wear:
         </p>
         <ul className="main__list">
           {clothingItems
@@ -22,12 +23,20 @@ export default function Main({ weatherData, onCardClick, clothingItems }) {
               return item.weather === weatherData.type;
             })
             .map((card) => {
-              return <ItemCard key={card._id} card={card} onCardClick={onCardClick} />;
+              return (
+                <ItemCard
+                  key={card._id}
+                  card={card}
+                  onCardClick={() => {
+                    onCardClick(card);
+                  }}
+                />
+              );
             })}
         </ul>
       </section>
     </main>
-  )
+  );
 }
 
 Main.propTypes = {
@@ -38,7 +47,7 @@ Main.propTypes = {
   onCardClick: PropTypes.func.isRequired,
   clothingItems: PropTypes.arrayOf(
     PropTypes.shape({
-      _id: PropTypes.number.isRequired,
+      _id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
       weather: PropTypes.string.isRequired,
     })
   ).isRequired,
