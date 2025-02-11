@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import "../ModalWithForm/ModalWithForm.css";
 import PropTypes from "prop-types";
-import Modal from "../Modal";
 
 export default function AddItemModal({
   closeActiveModal,
@@ -84,8 +83,7 @@ export default function AddItemModal({
   };
 
   return (
-    <Modal name={activeModal} onClose={closeActiveModal}>
-      <ModalWithForm
+    <ModalWithForm
         title="New Garment"
         buttonText={isSaving ? "Saving..." : "Save"}
         activeModal={activeModal}
@@ -201,7 +199,6 @@ export default function AddItemModal({
           </div>
         </fieldset>
       </ModalWithForm>
-    </Modal>
   );
 }
 
