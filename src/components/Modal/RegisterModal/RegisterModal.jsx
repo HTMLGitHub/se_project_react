@@ -7,7 +7,8 @@ export default function RegisterModal({
     closeActiveModal, 
     activeModal,
     onRegister,
-    isSaving}) {
+    isSaving,
+    setActiveModal,}) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
@@ -103,6 +104,21 @@ export default function RegisterModal({
                     value={avatar}
                 />
             </label>
+
+            <div className='modal__switch-wrapper'>
+                <span className='modal__switch-text'>or</span>
+                <button
+                    type="button"
+                    className='modal__switch-button'
+                    onClick={() => {
+                        closeActiveModal();
+                        setActiveModal("login");
+                        }
+                    }
+                >
+                    Register
+                </button>
+            </div>
         </ModalWithForm>
     );
 }
