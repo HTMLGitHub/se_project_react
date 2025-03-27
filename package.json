@@ -13,6 +13,7 @@
     "homepage": "https://htmlgithub.github.io/se_project_react/"
   },
   "dependencies": {
+    "mongoose": "^8.10.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.28.2",
