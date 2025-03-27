@@ -12,6 +12,7 @@ import Profile from "../Profile/Profile";
 import AddItemModal from "../Modal/AddItemModal/AddItemModal";
 import ItemModal from "../Modal/ItemModal/ItemModal";
 import { addItem, deleteItem, getItems } from "../../utils/api";
+import * as auth from "../../utils/auth";
 
 export default function App() {
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
