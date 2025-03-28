@@ -1,40 +1,37 @@
 const baseURL = "http://localhost:3001";
 
-export const register = ({name, avatar, email, password}) => {
-    return fetch(`${baseURL}/signup`, {
+export const register = ({name, avatar, email, password}) => 
+    authRequest({
+        endpoints: "/signup",
         method: "POST",
-        headers: {
-        "Content-Type": "application/json",
-        },
-        body: JSON.stringify({name, avatar, email, password}),
-    })
-        .then((res) => {
-            res.ok ? res.json() : Promise.reject(`Registration Error: ${res.status}`);
-        });
-    };
+        body: {name, avatar, email, password},
+    });
 
-export const login = ({email, password}) => {
-    return fetch(`${baseURL}/signin`, {
+export const login = ({email, password}) => 
+    authRequest({
+        endpoints: "/signin",
         method: "POST",
-        headers: {
-        "Content-Type": "application/json",
-        },
-        body: JSON.stringify({email, password}),
-    })
-        .then((res) => {
-        res.ok ? res.json() : Promise.reject(`Login Error: ${res.status}`);
-        });
-    };
+        body: {email, password},
+    });
 
-export const checkToken = (token) => {
-    return fetch(`${baseURL}/users/me`, {
+export const checkToken = (token) => 
+    authRequest({
+        endpoints: "/users/me",
         method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`,
-        },
-    })
-        .then((res) => {
-            res.ok ? res.json() : Promise.reject(`Token Error: ${res.status}`);
-        });
-    }
+        token,
+    });
+
+const authRequest = ({endpoints, method = "GET", token = null, body = null}) => {
+    const headers = {"Content-Type": "application/json",};
+    if (token) headers.Authorization = `Bearer ${token}`;
+
+    return fetch(`${baseURL}/${endpoints}`, {
+        method,
+        headers,
+        body: body ? JSON.stringify(body) : null,
+    }).then(handleResponse);
+}
+
+const handleResponse = (res, errorMessage) => {
+    return res.ok ? res.json() : Promise.reject(`${errorMessage}: ${res.status}`);
+};

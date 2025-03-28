@@ -13,6 +13,8 @@ import AddItemModal from "../Modal/AddItemModal/AddItemModal";
 import ItemModal from "../Modal/ItemModal/ItemModal";
 import { addItem, deleteItem, getItems } from "../../utils/api";
 import * as auth from "../../utils/auth";
+import LoginModal from "../Modal/LoginModal/LoginModal";
+import RegisterModal from "../Modal/RegisterModal/RegisterModal";
 
 export default function App() {
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
@@ -27,15 +29,60 @@ export default function App() {
     condition: "",
     isDay: true,
   });
-
   const [isSaving, setIsSaving] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState({});
+  const [token, setToken] = useState("");
+
+  const handleRegister = ({ name, avatar, email, password }) => {
+    auth.register({ name, avatar, email, password })
+      .then(() => {
+        handleLogin({ email, password });
+      })
+      .catch((err)=>{
+        console.error("Register error", err);
+      });
+    };
+
+  const handleLogin = ({ email, password }) => {
+    auth.login({ email, password })
+      .then((res) => {
+        localStorage.setItem("jwt", res.token);
+        setToken(res.token);
+        setIsLoggedIn(true);
+        return auth.checkToken(res.token);
+      })
+      .then((userData) => {
+        setCurrentUser(userData);
+        setActiveModal("");
+      })
+      .catch((err) => {
+        console.error("Login error", err);
+      });
+  };
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem("jwt");
+    if (storedToken) { // Save token to state
+      setToken(storedToken);
+      auth.checkToken(storedToken)
+        .then((userData) => {
+          setCurrentUser(userData);
+          setIsLoggedIn(true);
+        })
+        .catch((err) => {
+          console.error("Token check failed", err);
+          setIsLoggedIn(false);
+        });
+    }
+  }, []);
 
   const handleAddItemModal = ({ name, imageUrl, weatherType }) => {
     setIsSaving(true);
 
     const newID = v4();
 
-    addItem({ _id: newID, name, weather: weatherType, imageUrl})
+    addItem({ _id: newID, name, weather: weatherType, imageUrl}, token)
       .then(() => {
         setClothingItems((oldClothes) => [
           { _id: newID, name: name, weather: weatherType, imageUrl: imageUrl },
@@ -64,7 +111,7 @@ export default function App() {
   };
 
   const handleDeleteItem = (id) => {
-    deleteItem(id)
+    deleteItem(id, token)
       .then(() => {
         setClothingItems((oldClothes) =>
           oldClothes.filter((item) => item._id !== id)
@@ -147,6 +194,22 @@ export default function App() {
         card={selectedCard}
         closeActiveModal={closeActiveModal}
         onDeleteItem={handleDeleteItem}
+      />
+
+      <LoginModal
+        activeModal={activeModal}
+        closeActiveModal={closeActiveModal}
+        onLogin={handleLogin}
+        isSaving={isSaving}
+        setActiveModal={setActiveModal}
+      />
+
+      <RegisterModal
+        activeModal={activeModal}
+        closeActiveModal={closeActiveModal}
+        onRegister={handleRegister}
+        isSaving={isSaving}
+        setActiveModal={setActiveModal}
       />
     </div>
   );

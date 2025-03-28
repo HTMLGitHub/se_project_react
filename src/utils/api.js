@@ -9,18 +9,22 @@ export async function getItems() {
   return await apiRequest(`${baseURL}`);
 }
 
-export async function addItem({_id, name, weather, imageUrl}) {
+export async function addItem({_id, name, weather, imageUrl}, token) {
   return await apiRequest(`${baseURL}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({_id, name, weather, imageUrl}),
   });
 }
 
-export async function deleteItem(id) {
+export async function deleteItem(id, token) {
   return await apiRequest(`${baseURL}/${id}`, {
     method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
 }
