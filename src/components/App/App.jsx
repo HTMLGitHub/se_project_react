@@ -15,6 +15,7 @@ import { addItem, deleteItem, getItems } from "../../utils/api";
 import * as auth from "../../utils/auth";
 import LoginModal from "../Modal/LoginModal/LoginModal";
 import RegisterModal from "../Modal/RegisterModal/RegisterModal";
+import CurrentUserContext from "../../Contexts/CurrentUserContext";
 
 export default function App() {
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
@@ -150,67 +151,69 @@ export default function App() {
   }, []);
 
   return (
-    <div className="app">
-      <div className="app__content">
-        <CurrentTemperatureUnitContext.Provider
-          value={{ currentTemperatureUnit, handleToggleSwitchChange }}
-        >
-          <Header handleAddClick={handleAddClick} weatherData={weatherData} />
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <Main
-                  weatherData={weatherData}
-                  onCardClick={handleCardClick}
-                  clothingItems={clothingItems}
-                />
-              }
-            />
-            <Route
-              path="/profile"
-              element={
-                <Profile
-                  clothingItems={clothingItems}
-                  handleAddClick={handleAddClick}
-                  onCardClick={handleCardClick}
-                />
-              }
-            />
-          </Routes>
-        </CurrentTemperatureUnitContext.Provider>
+    <CurrentUserContext.Provider value={currentUser}>
+      <div className="app">
+        <div className="app__content">
+          <CurrentTemperatureUnitContext.Provider
+            value={{ currentTemperatureUnit, handleToggleSwitchChange }}
+          >
+            <Header handleAddClick={handleAddClick} weatherData={weatherData} />
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <Main
+                    weatherData={weatherData}
+                    onCardClick={handleCardClick}
+                    clothingItems={clothingItems}
+                  />
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <Profile
+                    clothingItems={clothingItems}
+                    handleAddClick={handleAddClick}
+                    onCardClick={handleCardClick}
+                  />
+                }
+              />
+            </Routes>
+          </CurrentTemperatureUnitContext.Provider>
 
-        <Footer />
+          <Footer />
+        </div>
+        <AddItemModal
+          closeActiveModal={closeActiveModal}
+          activeModal={activeModal}
+          onAddItemModal={handleAddItemModal}
+          isSaving={isSaving}
+        />
+
+        <ItemModal
+          activeModal={activeModal}
+          card={selectedCard}
+          closeActiveModal={closeActiveModal}
+          onDeleteItem={handleDeleteItem}
+        />
+
+        <LoginModal
+          activeModal={activeModal}
+          closeActiveModal={closeActiveModal}
+          onLogin={handleLogin}
+          isSaving={isSaving}
+          setActiveModal={setActiveModal}
+        />
+
+        <RegisterModal
+          activeModal={activeModal}
+          closeActiveModal={closeActiveModal}
+          onRegister={handleRegister}
+          isSaving={isSaving}
+          setActiveModal={setActiveModal}
+        />
       </div>
-      <AddItemModal
-        closeActiveModal={closeActiveModal}
-        activeModal={activeModal}
-        onAddItemModal={handleAddItemModal}
-        isSaving={isSaving}
-      />
-
-      <ItemModal
-        activeModal={activeModal}
-        card={selectedCard}
-        closeActiveModal={closeActiveModal}
-        onDeleteItem={handleDeleteItem}
-      />
-
-      <LoginModal
-        activeModal={activeModal}
-        closeActiveModal={closeActiveModal}
-        onLogin={handleLogin}
-        isSaving={isSaving}
-        setActiveModal={setActiveModal}
-      />
-
-      <RegisterModal
-        activeModal={activeModal}
-        closeActiveModal={closeActiveModal}
-        onRegister={handleRegister}
-        isSaving={isSaving}
-        setActiveModal={setActiveModal}
-      />
-    </div>
+    </CurrentUserContext.Provider>
   );
 }
