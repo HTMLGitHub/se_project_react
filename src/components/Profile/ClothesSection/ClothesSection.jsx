@@ -1,10 +1,16 @@
+import { useContext } from "react";
 import "./ClothesSection.css";
 import ItemCard from "../../Main/ItemCard/ItemCard";
-
+import CurrentUserContext from "../../../context/CurrentUserContext";
 import React from "react";
 import PropTypes from 'prop-types';
 
 export default function ClothesSection({clothingItems, handleAddClick, onCardClick}) {
+  const currentUser = useContext(CurrentUserContext);
+  const userItems = currentUser._id ?
+    clothingItems.filter((item) => item.owner === currentUser._id) :
+    [];
+
   return (
     <div className="clothesSection">
       <div className="clothesSection__topper">
@@ -13,7 +19,7 @@ export default function ClothesSection({clothingItems, handleAddClick, onCardCli
       </div>
 
       <ul className="clothesSection__list">
-        {clothingItems.map((card) => {
+        {userItems.map((card) => {
           return (
             <ItemCard
               key={card._id}
