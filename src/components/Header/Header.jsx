@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import "./Header.css";
 import { useState } from "react";
 import PropTypes from "prop-types";
@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import logo from "../../assets/logo.svg";
 import avatar from "../../assets/avatar.png";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 export default function Header({ handleAddClick, weatherData }) {
   const currentDate = new Date().toLocaleString("default", {
@@ -14,6 +15,10 @@ export default function Header({ handleAddClick, weatherData }) {
   });
 
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
+
+  const currentUser = useContext(CurrentUserContext);
+
+  const userIniitial = currentUser.name ? currentUser.name.charAt(0).toUpperCase() : "?";
 
   return (
     <header className="header">
@@ -37,16 +42,26 @@ export default function Header({ handleAddClick, weatherData }) {
         + Add Clothes
       </button>
 
-      <Link to="/profile" className="header__link">
+      {currentUser && currentUser.name ? (
+        <Link to="/profile" className="header__link">
         <div className="header__user-container">
-          <p className="header__user-name">Terrence Tegegne</p>
-          <img
-            src={avatar}
-            alt="Terrence Tegegne"
-            className="header__user-avatar"
-          ></img>
+          <p className="header__user-name">{currentUser.name}</p>
+          {currentUser.avatar ? (
+            <img
+              src={currentUser.avatar}
+              alt={currentUser.name}
+              className="header__user-avatar"
+          />
+          ) : (
+              <div className="header__user-avatar-placeholder">
+                {userIniitial}
+              </div>
+          )}
         </div>
-      </Link>
+        </Link>
+        ) : (
+        <div className="header__guest">Welcome, guest</div>
+      )}      
     </header>
   )
 }
