@@ -8,11 +8,15 @@ export default function Profile({
   clothingItems,
   handleAddClick,
   onCardClick,
+  onEditProfile,
 }) {
   return (
     <div className="profile">
       <section className="profile__sidebar">
         <Sidebar />
+        <button onClick={onEditProfile} className="profile__edit-button">
+          Edit Profile
+        </button>
       </section>
       <section className="profile__clothesSection">
         <ClothesSection
@@ -32,4 +36,5 @@ Profile.propTypes = {
   clothingItems: PropTypes.array.isRequired,
   handleAddClick: PropTypes.func.isRequired,
   onCardClick: PropTypes.func.isRequired,
+  onEditProfile: PropTypes.func.isRequired,
 };

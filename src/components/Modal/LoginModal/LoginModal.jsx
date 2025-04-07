@@ -30,6 +30,7 @@ export default function LoginModal({
             title="Log In"
             buttonText={isSaving ? "Logging in..." : "Log In"}
             activeModal={activeModal}
+            modalName="login"
             closeActiveModal={closeActiveModal}
             onSubmit={handleSubmit}
             isFormValid={true}

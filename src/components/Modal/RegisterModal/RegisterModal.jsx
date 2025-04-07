@@ -34,8 +34,9 @@ export default function RegisterModal({
             title="Sign Up"
             buttonText={isSaving ? "Registering..." : "Next"}
             activeModal={activeModal}
+            modalName="register"
             closeActiveModal={closeActiveModal}
-            handleSubmit={handleSubmit}
+            onSubmit={handleSubmit}
             isFormValid={true}
         >
             <label 

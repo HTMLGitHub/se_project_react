@@ -11,9 +11,10 @@ export default function ModalWithForm({
   closeActiveModal,
   onSubmit,
   isFormValid,
+  modalName,
 }) {
-  return activeModal === "add-garment" ? (
-    <Modal name={activeModal} onClose={closeActiveModal}>
+  return activeModal === modalName ? (
+    <Modal name={modalName} onClose={closeActiveModal}>
       <h2 className="modal__title">{title}</h2>
           <form onSubmit={onSubmit} className="modal__form">
             {children}
@@ -37,4 +38,5 @@ ModalWithForm.propTypes = {
   closeActiveModal: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   isFormValid: PropTypes.bool.isRequired,
+  modalName: PropTypes.string.isRequired,
 };

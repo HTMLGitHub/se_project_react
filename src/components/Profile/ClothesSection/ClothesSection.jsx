@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import "./ClothesSection.css";
 import ItemCard from "../../Main/ItemCard/ItemCard";
-import CurrentUserContext from "../../../context/CurrentUserContext";
+import CurrentUserContext from "../../../Contexts/CurrentUserContext.js";
 import React from "react";
 import PropTypes from 'prop-types';
 

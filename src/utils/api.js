@@ -28,3 +28,14 @@ export async function deleteItem(id, token) {
     },
   });
 }
+
+export async function updateUserProfile({name, avatar}, token) {
+  return await apiRequest(`${baseURL}/users/me`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({name, avatar}),
+  });
+}

@@ -16,6 +16,8 @@ import * as auth from "../../utils/auth";
 import LoginModal from "../Modal/LoginModal/LoginModal";
 import RegisterModal from "../Modal/RegisterModal/RegisterModal";
 import CurrentUserContext from "../../Contexts/CurrentUserContext";
+import EditProfileModal from "../Modal/EditProfileModal/EditProfileModal";
+import { updateUserProfile } from "../../utils/api";
 
 export default function App() {
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
@@ -34,6 +36,22 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [token, setToken] = useState("");
+
+  const handleEditProfile =({name, avatar}) => {
+    setIsSaving(true);
+    updateUserProfile({name, avatar}, token)
+      .then((userData) => {
+        setCurrentUser(userData);
+        closeActiveModal();
+      })
+      .catch((err) => {
+        console.error("Update profile error", err);
+      })
+      .finally(() => {
+        setIsSaving(false);
+      }
+    );
+  }
 
   const handleRegister = ({ name, avatar, email, password }) => {
     auth.register({ name, avatar, email, password })
@@ -176,6 +194,9 @@ export default function App() {
                     clothingItems={clothingItems}
                     handleAddClick={handleAddClick}
                     onCardClick={handleCardClick}
+                    onEditProfile={() => {
+                      setActiveModal("edit-profile");
+                    }}  
                   />
                 }
               />
@@ -212,6 +233,14 @@ export default function App() {
           onRegister={handleRegister}
           isSaving={isSaving}
           setActiveModal={setActiveModal}
+        />
+
+        <EditProfileModal
+          activeModal={activeModal}
+          closeActiveModal={closeActiveModal}
+          onEditProfile={handleEditProfile}
+          isSaving={isSaving}
+          currentUser={currentUser}
         />
       </div>
     </CurrentUserContext.Provider>

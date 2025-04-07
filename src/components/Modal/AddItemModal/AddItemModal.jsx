@@ -87,7 +87,7 @@ export default function AddItemModal({
         title="New Garment"
         buttonText={isSaving ? "Saving..." : "Save"}
         activeModal={activeModal}
-
+        modalName="add-garment"
         closeActiveModal={closeActiveModal}
         onSubmit={handleSubmit}
         isFormValid={isFormValid}
