@@ -2,7 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import "./ItemCard.css";
 
-export default function ItemCard({ card, onCardClick }) {
+export default function ItemCard({ card, onCardClick, onCardLike }) {
+  
+  function handleLike() {
+    onCardLike(card);
+  }
+
   return (
     <li className="itemcard__container">
       <h2 className="itemcard__name">{card.name}</h2>
@@ -24,4 +29,5 @@ ItemCard.propTypes = {
     imageUrl: PropTypes.string,
   }),
   onCardClick: PropTypes.func.isRequired,
+  onCardLike: PropTypes.func.isRequired,
 };

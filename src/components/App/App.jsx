@@ -11,13 +11,13 @@ import CurrentTemperatureUnitContext from "../../Contexts/CurrentTemperatureUnit
 import Profile from "../Profile/Profile";
 import AddItemModal from "../Modal/AddItemModal/AddItemModal";
 import ItemModal from "../Modal/ItemModal/ItemModal";
-import { addItem, deleteItem, getItems } from "../../utils/api";
+import * as api from "../../utils/api";
 import * as auth from "../../utils/auth";
 import LoginModal from "../Modal/LoginModal/LoginModal";
 import RegisterModal from "../Modal/RegisterModal/RegisterModal";
 import CurrentUserContext from "../../Contexts/CurrentUserContext";
 import EditProfileModal from "../Modal/EditProfileModal/EditProfileModal";
-import { updateUserProfile } from "../../utils/api";
+
 
 export default function App() {
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
@@ -37,9 +37,21 @@ export default function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [token, setToken] = useState("");
 
+  const handleCardLike = ({_id, isLiked}) => {
+    const token = localStorage.getItem("jwt");
+    const apiMethod = isLiked ? api.removeCardLike : api.addCardLike;
+    apiMethod(_id, token)
+      .then((newCard) => {
+        setClothingItems((oldCards) =>
+          oldCards.map((card) => (card._id === newCard._id ? newCard : card))
+        );
+      })
+      .catch(console.error);
+  }
+
   const handleEditProfile =({name, avatar}) => {
     setIsSaving(true);
-    updateUserProfile({name, avatar}, token)
+    api.updateUserProfile({name, avatar}, token)
       .then((userData) => {
         setCurrentUser(userData);
         closeActiveModal();
@@ -101,7 +113,7 @@ export default function App() {
 
     const newID = v4();
 
-    addItem({ _id: newID, name, weather: weatherType, imageUrl}, token)
+    api.addItem({ _id: newID, name, weather: weatherType, imageUrl}, token)
       .then(() => {
         setClothingItems((oldClothes) => [
           { _id: newID, name: name, weather: weatherType, imageUrl: imageUrl },
@@ -130,7 +142,7 @@ export default function App() {
   };
 
   const handleDeleteItem = (id) => {
-    deleteItem(id, token)
+    api.deleteItem(id, token)
       .then(() => {
         setClothingItems((oldClothes) =>
           oldClothes.filter((item) => item._id !== id)
@@ -161,7 +173,7 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    getItems()
+    api.getItems()
       .then((data) => {
         setClothingItems(data);
       })
@@ -188,6 +200,7 @@ export default function App() {
                     weatherData={weatherData}
                     onCardClick={handleCardClick}
                     clothingItems={clothingItems}
+                    onCardLike={handleCardLike}
                   />
                 }
               />

@@ -6,7 +6,7 @@ import { useContext } from "react";
 import ItemCard from "./ItemCard/ItemCard";
 import CurrentTemperatureUnitContext from "../../Contexts/CurrentTemperatureUnitContext.js";
 
-export default function Main({ weatherData, onCardClick, clothingItems }) {
+export default function Main({ weatherData, onCardClick, clothingItems, onCardLike }) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
 
   return (
@@ -30,6 +30,7 @@ export default function Main({ weatherData, onCardClick, clothingItems }) {
                   onCardClick={() => {
                     onCardClick(card);
                   }}
+                  onCardLike={onCardLike}
                 />
               );
             })}
@@ -51,4 +52,5 @@ Main.propTypes = {
       weather: PropTypes.string.isRequired,
     })
   ).isRequired,
+  onCardLike: PropTypes.func.isRequired,
 };

@@ -1,4 +1,5 @@
-const baseURL = "http://localhost:3001/items";
+const baseURL = "http://localhost:3001";
+const itemsURL = `${baseURL}/items`;
 
 async function apiRequest(url, options={}) {
   const res = await fetch(url, options);
@@ -6,11 +7,11 @@ async function apiRequest(url, options={}) {
 }
 
 export async function getItems() {
-  return await apiRequest(`${baseURL}`);
+  return await apiRequest(`${itemsURL}`);
 }
 
 export async function addItem({_id, name, weather, imageUrl}, token) {
-  return await apiRequest(`${baseURL}`, {
+  return await apiRequest(`${itemsURL}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -21,7 +22,7 @@ export async function addItem({_id, name, weather, imageUrl}, token) {
 }
 
 export async function deleteItem(id, token) {
-  return await apiRequest(`${baseURL}/${id}`, {
+  return await apiRequest(`${itemsURL}/${id}`, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -37,5 +38,23 @@ export async function updateUserProfile({name, avatar}, token) {
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({name, avatar}),
+  });
+}
+
+export async function addCardLike(id, token) {
+  return await apiRequest(`${itemsURL}/${id}/likes`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+
+export async function removeCardLike(id, token) {
+  return await apiRequest(`${itemsURL}/${id}/likes`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
 }
