@@ -175,7 +175,11 @@ export default function App() {
           <CurrentTemperatureUnitContext.Provider
             value={{ currentTemperatureUnit, handleToggleSwitchChange }}
           >
-            <Header handleAddClick={handleAddClick} weatherData={weatherData} />
+            <Header 
+              handleAddClick={handleAddClick}
+              handleRegisterClick={() => setActiveModal("register")}
+              handleLoginClick={() => setActiveModal("login")}
+              weatherData={weatherData} />
             <Routes>
               <Route
                 path="/"

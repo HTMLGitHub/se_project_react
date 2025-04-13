@@ -71,7 +71,7 @@ export default function LoginModal({
             </label>
 
             <div className='modal__switch-wrapper'>
-                <span className='modal__switch-text'>or</span>
+                
                 <button
                     type="button"
                     className='modal__switch-button'
@@ -81,8 +81,9 @@ export default function LoginModal({
                         }
                     }
                 >
-                    Register
+                    Log In
                 </button>
+                <span className='modal__switch-text'> or Sign Up</span>
             </div>
         </ModalWithForm>
     );

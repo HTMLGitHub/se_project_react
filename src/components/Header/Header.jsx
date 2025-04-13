@@ -6,9 +6,9 @@ import { Link } from "react-router-dom";
 import logo from "../../assets/logo.svg";
 import avatar from "../../assets/avatar.png";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
-import CurrentUserContext from "../../contexts/CurrentUserContext";
+import CurrentUserContext from "../../Contexts/CurrentUserContext";
 
-export default function Header({ handleAddClick, weatherData }) {
+export default function Header({ handleAddClick, handleRegisterClick, handleLoginClick, weatherData }) {
   const currentDate = new Date().toLocaleString("default", {
     month: "long",
     day: "numeric",
@@ -45,6 +45,12 @@ export default function Header({ handleAddClick, weatherData }) {
       {currentUser && currentUser.name ? (
         <Link to="/profile" className="header__link">
         <div className="header__user-container">
+          <button
+            onClick={handleAddClick}
+            type="button"
+            className="header__add-clothes-button">
+            + Add Clothes
+          </button>
           <p className="header__user-name">{currentUser.name}</p>
           {currentUser.avatar ? (
             <img
@@ -60,7 +66,20 @@ export default function Header({ handleAddClick, weatherData }) {
         </div>
         </Link>
         ) : (
-        <div className="header__guest">Welcome, guest</div>
+        <div className="header__user-container">
+          <button
+            onClick={handleRegisterClick}
+            type="button"
+            className="header__register-button">
+            Sign Up
+          </button>
+          <button
+            onClick={handleLoginClick}
+            type="button"
+            className="header__login-button">
+            Log In
+          </button>
+        </div>
       )}      
     </header>
   )
