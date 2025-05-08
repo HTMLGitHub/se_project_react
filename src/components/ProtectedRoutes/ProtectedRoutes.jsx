@@ -1,4 +1,5 @@
 import {Navigate, useLocation} from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 export default function ProtectedRoute({
     isLoggedIn,
@@ -24,3 +25,9 @@ export default function ProtectedRoute({
     // Otherwise, display the children components.
     return children;
 }
+
+ProtectedRoute.propTypes = {
+    isLoggedIn: PropTypes.bool.isRequired,
+    children: PropTypes.node.isRequired,
+    anonymous: PropTypes.bool
+};

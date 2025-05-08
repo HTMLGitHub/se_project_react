@@ -31,7 +31,7 @@
     padding: 0 auto 0 0;
 }
 
-.modal__delete_button {
+.modal__delete-button {
     border: none;
     background-color: transparent;
     position: absolute;

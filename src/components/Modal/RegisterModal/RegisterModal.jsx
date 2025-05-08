@@ -32,12 +32,28 @@ export default function RegisterModal({
     return (
         <ModalWithForm
             title="Sign Up"
-            buttonText={isSaving ? "Registering..." : "Next"}
+            buttonText={isSaving ? "Registering..." : "Sign Up"}
             activeModal={activeModal}
             modalName="register"
             closeActiveModal={closeActiveModal}
             onSubmit={handleSubmit}
             isFormValid={true}
+            altAction={
+                <span className="modal__switch-text">
+                    or{" "}
+                    <button
+                        type="button"
+                        className='modal__switch-button'
+                        onClick={() => {
+                            closeActiveModal();
+                            setActiveModal("login");
+                            }
+                        }
+                    >
+                    Log In
+                    </button>
+                </span>
+            }
         >
             <label 
                 htmlFor='email'
@@ -105,22 +121,6 @@ export default function RegisterModal({
                     value={avatar}
                 />
             </label>
-
-            <div className='modal__switch-wrapper'>
-                
-                <button
-                    type="button"
-                    className='modal__switch-button'
-                    onClick={() => {
-                        closeActiveModal();
-                        setActiveModal("login");
-                        }
-                    }
-                >
-                    Sign Up
-                </button>
-                <span className='modal__switch-text'> or Log In</span>
-            </div>
         </ModalWithForm>
     );
 }
