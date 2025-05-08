@@ -9,6 +9,7 @@ export default function Profile({
   handleAddClick,
   onCardClick,
   onEditProfile,
+  onSignOut,
 }) {
   return (
     <div className="profile">
@@ -16,6 +17,14 @@ export default function Profile({
         <Sidebar />
         <button onClick={onEditProfile} className="profile__edit-button">
           Edit Profile
+        </button>
+
+        <button 
+          className="profile__logout-button"
+          onClick={onSignOut}
+          type="button"
+          >
+            Sign Out
         </button>
       </section>
       <section className="profile__clothesSection">
@@ -37,4 +46,5 @@ Profile.propTypes = {
   handleAddClick: PropTypes.func.isRequired,
   onCardClick: PropTypes.func.isRequired,
   onEditProfile: PropTypes.func.isRequired,
+  onSignOut: PropTypes.func.isRequired,
 };

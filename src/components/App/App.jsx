@@ -181,6 +181,13 @@ export default function App() {
       .catch(console.error);
   }, []);
 
+  const handleSignOut = () => {
+    localStorage.removeItem("jwt");
+    setIsLoggedIn(false);
+    setCurrentUser({});
+    setToken("");
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="app">
@@ -216,6 +223,7 @@ export default function App() {
                       onEditProfile={() => {
                         setActiveModal("edit-profile");
                       }}  
+                      onSignOut={handleSignOut}
                     /> 
                   </ProtectedRoute>
                 }
