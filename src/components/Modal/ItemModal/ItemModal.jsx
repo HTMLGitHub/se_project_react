@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import "./ItemModal.css";
 import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
 import Modal from "../Modal";
-import CurrentUserContext from "../../../contexts/CurrentUserContext";
-
+import CurrentUserContext from "../../../Contexts/CurrentUserContext";
 export default function ItemModal({
   activeModal,
   card,
@@ -39,7 +38,7 @@ export default function ItemModal({
       {isOwner && (
         <button
           type="button"
-          className="modal__delete_button"
+          className="modal__delete-button"
           onClick={handleDeleteClick}
         >
           Delete Item

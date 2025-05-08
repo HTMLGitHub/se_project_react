@@ -17,6 +17,7 @@ import LoginModal from "../Modal/LoginModal/LoginModal";
 import RegisterModal from "../Modal/RegisterModal/RegisterModal";
 import CurrentUserContext from "../../Contexts/CurrentUserContext";
 import EditProfileModal from "../Modal/EditProfileModal/EditProfileModal";
+import ProtectedRoute from "../ProtectedRoutes/ProtectedRoutes";
 
 
 export default function App() {
@@ -207,14 +208,16 @@ export default function App() {
               <Route
                 path="/profile"
                 element={
-                  <Profile
-                    clothingItems={clothingItems}
-                    handleAddClick={handleAddClick}
-                    onCardClick={handleCardClick}
-                    onEditProfile={() => {
-                      setActiveModal("edit-profile");
-                    }}  
-                  />
+                  <ProtectedRoute isLoggedIn={isLoggedIn}>
+                    <Profile
+                      clothingItems={clothingItems}
+                      handleAddClick={handleAddClick}
+                      onCardClick={handleCardClick}
+                      onEditProfile={() => {
+                        setActiveModal("edit-profile");
+                      }}  
+                    /> 
+                  </ProtectedRoute>
                 }
               />
             </Routes>

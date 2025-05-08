@@ -34,14 +34,6 @@ export default function Header({ handleAddClick, handleRegisterClick, handleLogi
         handleToggle={() => setCurrentTemperatureUnit(!currentTemperatureUnit)}
       />
 
-      <button
-        onClick={handleAddClick}
-        type="button"
-        className="header__add-clothes-button"
-      >
-        + Add Clothes
-      </button>
-
       {currentUser && currentUser.name ? (
         <Link to="/profile" className="header__link">
         <div className="header__user-container">
@@ -87,6 +79,8 @@ export default function Header({ handleAddClick, handleRegisterClick, handleLogi
 
 Header.propTypes = {
   handleAddClick: PropTypes.func.isRequired,
+  handleRegisterClick: PropTypes.func.isRequired,
+  handleLoginClick: PropTypes.func.isRequired,
   weatherData: PropTypes.shape({
     city: PropTypes.string.isRequired,
   }).isRequired,

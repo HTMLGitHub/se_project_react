@@ -34,6 +34,22 @@ export default function LoginModal({
             closeActiveModal={closeActiveModal}
             onSubmit={handleSubmit}
             isFormValid={true}
+            altAction={
+                <span className="modal__auth-text">
+                    or{" "}
+                    <button
+                        type="button"
+                        className='modal__auth-button'
+                        onClick={() => {
+                            closeActiveModal();
+                            setActiveModal("register");
+                            }
+                        }
+                    >
+                    Sign Up
+                    </button>
+                </span>
+            }
         >
             <label
                 htmlFor='email'
@@ -69,22 +85,6 @@ export default function LoginModal({
                     value={password}
                 />
             </label>
-
-            <div className='modal__switch-wrapper'>
-                
-                <button
-                    type="button"
-                    className='modal__switch-button'
-                    onClick={() => {
-                        closeActiveModal();
-                        setActiveModal("register");
-                        }
-                    }
-                >
-                    Log In
-                </button>
-                <span className='modal__switch-text'> or Sign Up</span>
-            </div>
         </ModalWithForm>
     );
 }

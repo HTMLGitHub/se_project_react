@@ -18,17 +18,21 @@ export default function ClothesSection({clothingItems, handleAddClick, onCardCli
         <button className="topper__button" onClick={handleAddClick}>+ Add New</button>
       </div>
 
-      <ul className="clothesSection__list">
-        {userItems.map((card) => {
-          return (
-            <ItemCard
-              key={card._id}
-              card={card}
-              onCardClick={onCardClick}
-            />
-          );
-        })}
-      </ul>
+      {userItems.length > 0 ? (
+        <ul className="clothesSection__list">
+        {userItems.map((card) => (
+          <ItemCard
+            key={card._id}
+            card={card}
+            onCardClick={onCardClick}
+          />
+        ))}
+        </ul>
+      ) : (
+        <div className="clothesSection__empty">
+          <p className="empty__text">You have no items yet</p>
+        </div>
+      )}
     </div>
 )};
 
