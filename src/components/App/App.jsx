@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import "./App.css";
 import { v4 } from 'uuid';
 import Header from "../Header/Header";
@@ -37,6 +37,17 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [token, setToken] = useState("");
+
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state?.openRegisterModal) {
+      setActiveModal("register");
+      
+      // Clear state so it does not reopen on every navigation
+      window.history.replaceState({}, document.title);
+    }
+  }, [location]);
 
   const handleCardLike = ({_id, isLiked}) => {
     const token = localStorage.getItem("jwt");

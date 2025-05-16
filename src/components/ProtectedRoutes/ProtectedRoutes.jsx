@@ -15,11 +15,11 @@ export default function ProtectedRoute({
     if (isLoggedIn && anonymous) {return <Navigate to={from} />;}
 
     // If the user is not logged in and tries to access a route taht requires authorization, 
-    // we redirect them to the /login route.
+    // we redirect them to the /signin route.
     if (!isLoggedIn && !anonymous) {
-        // While redirecting to /login, we set the location objects state.from property to the current location value.
+        // While redirecting to /signin, we set the location objects state.from property to the current location value.
         // This allows us to redirect the user back to the route they were trying to access after they have logged in.
-        return <Navigate to="/login"  state={{from: location}}/>;
+        return <Navigate to="/"  state={{from: location, openRegisterModal: true}}/>;
     }
 
     // Otherwise, display the children components.

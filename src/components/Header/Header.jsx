@@ -4,9 +4,9 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.svg";
-import avatar from "../../assets/avatar.png";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import CurrentUserContext from "../../Contexts/CurrentUserContext";
+import UserIdentity from "../UserIdentity/UserIdentity";
 
 export default function Header({ handleAddClick, handleRegisterClick, handleLoginClick, weatherData }) {
   const currentDate = new Date().toLocaleString("default", {
@@ -18,8 +18,6 @@ export default function Header({ handleAddClick, handleRegisterClick, handleLogi
 
   const currentUser = useContext(CurrentUserContext);
 
-  const userIniitial = currentUser.name ? currentUser.name.charAt(0).toUpperCase() : "?";
-
   return (
     <header className="header">
       <Link to="/" className="header__link">
@@ -29,50 +27,44 @@ export default function Header({ handleAddClick, handleRegisterClick, handleLogi
         {currentDate}, {weatherData.city}
       </div>
 
-      <ToggleSwitch
-        temperatureUnit={currentTemperatureUnit}
-        handleToggle={() => setCurrentTemperatureUnit(!currentTemperatureUnit)}
-      />
+      <div className="header__left">
+        <ToggleSwitch
+          temperatureUnit={currentTemperatureUnit}
+          handleToggle={() => setCurrentTemperatureUnit(!currentTemperatureUnit)}
+        />
 
-      {currentUser && currentUser.name ? (
-        <Link to="/profile" className="header__link">
-        <div className="header__user-container">
+        {currentUser && currentUser.name && (
           <button
             onClick={handleAddClick}
             type="button"
             className="header__add-clothes-button">
             + Add Clothes
-          </button>
-          <p className="header__user-name">{currentUser.name}</p>
-          {currentUser.avatar ? (
-            <img
-              src={currentUser.avatar}
-              alt={currentUser.name}
-              className="header__user-avatar"
-          />
+        </button>
+        )}
+      </div>
+
+      <div className="header__right">
+        {currentUser && currentUser.name ? (
+          <Link to="/profile" className="header__link">
+            <UserIdentity size={40} containerClass="user-identity__header"/>
+          </Link>          
           ) : (
-              <div className="header__user-avatar-placeholder">
-                {userIniitial}
-              </div>
-          )}
-        </div>
-        </Link>
-        ) : (
-        <div className="header__user-container">
-          <button
-            onClick={handleRegisterClick}
-            type="button"
-            className="header__register-button">
-            Sign Up
-          </button>
-          <button
-            onClick={handleLoginClick}
-            type="button"
-            className="header__login-button">
-            Log In
-          </button>
-        </div>
-      )}      
+          <div className="header__user-container">
+            <button
+              onClick={handleRegisterClick}
+              type="button"
+              className="header__register-button">
+              Sign Up
+            </button>
+            <button
+              onClick={handleLoginClick}
+              type="button"
+              className="header__login-button">
+              Log In
+            </button>
+          </div>
+        )}     
+      </div> 
     </header>
   )
 }

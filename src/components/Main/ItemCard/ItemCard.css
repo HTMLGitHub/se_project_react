@@ -8,8 +8,18 @@
   position: relative;
 }
 
-.itemcard__name {
+.itemcard__header {
   position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  z-index: 1;
+}
+
+.itemcard__name {
   font-family: "Cabinet Grotesk Bold", sans-serif;
   font-size: 16px;
   line-height: 20px;
@@ -19,7 +29,6 @@
   border-radius: 7px;
   padding: 0 12px;
   margin: 0;
-  top: 15px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -47,10 +56,4 @@
 
 .itemcard__like-button_active {
   background-image: url("../../../assets/Liked.png"); /*filled in black heart*/
-}
-
-.itemcard__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }

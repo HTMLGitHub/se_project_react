@@ -12,7 +12,7 @@ export default function ItemCard({ card, onCardClick, onCardLike }) {
   }`;
 
   function handleLike() {
-    onCardLike({_id: card._id, isLiked});
+    onCardLike({id: card._id, isLiked});
   }
 
   return (
@@ -44,7 +44,9 @@ ItemCard.propTypes = {
   card: PropTypes.shape({
     name: PropTypes.string,
     imageUrl: PropTypes.string,
+    _id: PropTypes.string.isRequired
   }),
+  likes: PropTypes.arrayOf(PropTypes.string).isRequired,
   onCardClick: PropTypes.func.isRequired,
   onCardLike: PropTypes.func.isRequired,
 };

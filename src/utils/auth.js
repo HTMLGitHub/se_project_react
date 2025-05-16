@@ -2,21 +2,21 @@ const baseURL = "http://localhost:3001";
 
 export const register = ({name, avatar, email, password}) => 
     authRequest({
-        endpoints: "/signup",
+        endpoints: "signup",
         method: "POST",
         body: {name, avatar, email, password},
     });
 
 export const login = ({email, password}) => 
     authRequest({
-        endpoints: "/signin",
+        endpoints: "signin",
         method: "POST",
         body: {email, password},
     });
 
 export const checkToken = (token) => 
     authRequest({
-        endpoints: "/users/me",
+        endpoints: "users/me",
         method: "GET",
         token,
     });
@@ -28,7 +28,7 @@ const authRequest = ({endpoints, method = "GET", token = null, body = null}) => 
     return fetch(`${baseURL}/${endpoints}`, {
         method,
         headers,
-        body: body ? JSON.stringify(body) : null,
+        body: body ? JSON.stringify(body) : undefined,
     }).then(handleResponse);
 }
 

@@ -16,7 +16,7 @@ export default function Profile({
       <section className="profile__sidebar">
         <Sidebar />
         <button onClick={onEditProfile} className="profile__edit-button">
-          Edit Profile
+          Change profile data
         </button>
 
         <button 
@@ -24,7 +24,7 @@ export default function Profile({
           onClick={onSignOut}
           type="button"
           >
-            Sign Out
+            Log Out
         </button>
       </section>
       <section className="profile__clothesSection">

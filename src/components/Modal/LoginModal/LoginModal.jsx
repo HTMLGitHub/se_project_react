@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import ModalWithForm from '../ModalWithForm/ModalWithForm';
 import "../ModalWithForm/ModalWithForm.css";
-import PropTypes from "prop-types";
 
 export default function LoginModal({
     closeActiveModal,
@@ -12,6 +11,8 @@ export default function LoginModal({
 }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [isFormValid, setIsFormValid] = useState(false);
+    const [errors, setErrors] = useState({});
 
     useEffect(() => {
         if (activeModal === "login") {
@@ -25,6 +26,16 @@ export default function LoginModal({
         onLogin({email, password});
     };
 
+    useEffect(() => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const isEmailValid = emailRegex.test(email.trim());
+        const isPasswordValid = password.trim() !== "";
+
+        setIsFormValid(isEmailValid && isPasswordValid);
+    }
+    , [email, password]);
+
+
     return (
         <ModalWithForm
             title="Log In"
@@ -33,7 +44,7 @@ export default function LoginModal({
             modalName="login"
             closeActiveModal={closeActiveModal}
             onSubmit={handleSubmit}
-            isFormValid={true}
+            isFormValid={isFormValid}
             altAction={
                 <span className="modal__auth-text">
                     or{" "}

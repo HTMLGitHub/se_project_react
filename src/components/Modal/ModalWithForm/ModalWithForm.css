@@ -99,17 +99,21 @@
 }
 
 .modal__auth-text {
-  color: gray;
-  font-size: 14px;
+  background: none;
+  font-family: "Cabinet Grotesk Bold", sans-serif;
+  line-height: 20px;
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.5)
 }
 
 .modal__auth-button {
   background: none;
+  font-family: "Cabinet Grotesk Bold", sans-serif;
+  line-height: 20px;
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.5);
   border: none;
-  font-size: 14px;
-  color: #000;
-  font-weight: bold;
   cursor: pointer;
   padding: 0;
-  text-decoration: underline;
+  text-decoration: none;
 }

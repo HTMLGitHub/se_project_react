@@ -13,7 +13,8 @@ export default function RegisterModal({
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
     const [avatar, setAvatar] = useState("");    
-    //const [isFormValid, setIsFormValid] = useState(false);
+    const [isFormValid, setIsFormValid] = useState(false);
+    const [errors, setErrors] = useState({});
     
     useEffect(() => {
         if (activeModal === "register") {
@@ -24,9 +25,50 @@ export default function RegisterModal({
         }
     }, [activeModal]);
 
+    function handleChange(e) {
+        const {name, value, validationMessage} = e.target;
+        switch (name) {
+            case "email":
+                setEmail(value);
+                break;
+            case "password":
+                setPassword(value);
+                break;
+            case "name":
+                setName(value);
+                break;
+            case "avatar":
+                setAvatar(value);
+                break;
+            default:
+                break;
+        }
+
+        // Update error messages
+        setErrors((prev) => ({
+            ...prev,
+            [name]: validationMessage,
+        }));
+    }
+
+    useEffect(() => {
+        const hasErrors = Object.values(errors).some((error) => error);
+        const requiredFields = email.trim() !== "" && password.trim() !== "";
+        setIsFormValid(!hasErrors && requiredFields);
+    }, [email, password, name, avatar, errors]);
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        onRegister({name, avatar, email, password});
+
+        const payload = {
+            email,
+            password
+        };
+
+        if (name.trim()){ payload.name = name; }
+        if (avatar.trim()){ payload.avatar = avatar; }
+
+        if (isFormValid) { onRegister(payload); }        
     }
 
     return (
@@ -37,13 +79,13 @@ export default function RegisterModal({
             modalName="register"
             closeActiveModal={closeActiveModal}
             onSubmit={handleSubmit}
-            isFormValid={true}
+            isFormValid={isFormValid}
             altAction={
-                <span className="modal__switch-text">
+                <span className="modal__auth-text">
                     or{" "}
                     <button
                         type="button"
-                        className='modal__switch-button'
+                        className='modal__auth-button'
                         onClick={() => {
                             closeActiveModal();
                             setActiveModal("login");
@@ -61,14 +103,13 @@ export default function RegisterModal({
             >
                 Email*
                 <input
+                    name="email"
                     type="email"
                     className="modal__input modal__input_type_email"
                     id="email"
                     placeholder="Email"
                     required
-                    onChange={(e) => {
-                        setEmail(e.target.value);
-                    }}
+                    onChange={handleChange}
                     value={email}
                 />
             </label>
@@ -78,14 +119,13 @@ export default function RegisterModal({
             >
                 Password*
                 <input
+                    name="password"
                     type="password"
                     className="modal__input modal__input_type_password"
                     id="password"
                     placeholder="Password"
                     required
-                    onChange={(e) => {
-                        setPassword(e.target.value);
-                    }}
+                    onChange={handleChange}
                     value={password}
                 />
             </label>
@@ -95,13 +135,12 @@ export default function RegisterModal({
             >
                 Name
                 <input
+                    name="name"
                     type="text"
                     className="modal__input modal__input_type_name"
                     id="name"
                     placeholder="Name"
-                    onChange={(e) => {
-                        setName(e.target.value);
-                    }}
+                    onChange={handleChange}
                     value={name}
                 />
             </label>
@@ -111,13 +150,12 @@ export default function RegisterModal({
             >
                 Avatar
                 <input
+                    name="avatar"
                     type="url"
                     className="modal__input modal__input_type_avatar"
                     id="avatar"
                     placeholder="Avatar URL"
-                    onChange={(e) => {
-                        setAvatar(e.target.value);
-                    }}
+                    onChange={handleChange}
                     value={avatar}
                 />
             </label>
