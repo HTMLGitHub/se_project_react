@@ -1,0 +1,35 @@
+.clothesSection {
+    
+}
+
+.clothesSection__topper {
+    display: flex;
+    gap: 20px;
+    height: 56px;
+    align-items: center;
+}
+
+.topper__text {
+    font-family: "Cabinet Grotesk Bold", sans-serif;
+    font-size: 20px;
+    line-height: 24.8px;
+    padding: 0;
+    margin: 0;
+}
+
+.topper__button {
+    font-family: "Cabinet Grotesk Bold", sans-serif;
+    font-size: 20px;
+    line-height: 24.8px;
+    border: none;
+    color: rgba(0, 0, 0, .6);
+    background: none;
+    padding: 0;
+    margin: 0;
+    transition: color .2s;
+    cursor: pointer;
+}
+
+.topper__button:hover {
+    color: rgba(0, 0, 0, 1);
+}

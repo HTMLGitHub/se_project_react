@@ -1,0 +1,58 @@
+.itemcard__container {
+  padding: 0;
+  margin: 0;
+  height: 326px;
+  width: 323px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.itemcard__header {
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  align-items: center;
+  display: flex;
+  gap: 10px;
+}
+
+.itemcard__name {
+  font-family: "Cabinet Grotesk Bold", sans-serif;
+  font-size: 16px;
+  line-height: 20px;
+  width: 73px;
+  height: 24px;
+  background-color: #fff;
+  border-radius: 7px;
+  padding: 0 12px;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.itemcard__image {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  border-radius: 15px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.itemcard__like-button {
+  width: 20px;
+  height: 18px;
+  background-image: url("../../../assets/Unliked.png"); /*gray outlined heart*/
+  background-repeat: no-repeat;
+  background-size: center;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.itemcard__like-button_active {
+  background-image: url("../../../assets/Liked.png"); /*filled in black heart*/
+}

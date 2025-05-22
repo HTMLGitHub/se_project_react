@@ -1,0 +1,76 @@
+import React from "react";
+import "./EditProfileModal.css";
+import ModalWithForm from "../ModalWithForm/ModalWithForm";
+import PropTypes from "prop-types";
+
+export default function EditProfileModal({
+    closeActiveModal, 
+    activeModal,
+    onEditProfile,
+    isSaving,
+    currentUser,
+}) {
+    //const [isEditModalOpen, setIsEditModalOpen] = React.useState(false);
+    const [name, setName] = React.useState("");
+    const [avatar, setAvatar] = React.useState("");
+
+    React.useEffect(() => {
+        if (activeModal === "edit-profile" && currentUser) {
+            setName(currentUser.name || "");
+            setAvatar(currentUser.avatar || "");
+        }
+    }, [activeModal, currentUser]);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        onEditProfile({name, avatar});
+    }
+
+    return (
+        <ModalWithForm
+            title="Edit Profile"
+            buttonText={isSaving ? "Saving..." : "Save"}
+            activeModal={activeModal}
+            modalName="edit-profile"
+            closeActiveModal={closeActiveModal}
+            onSubmit={handleSubmit}
+            isFormValid={true}
+        >
+            <label 
+                className='modal__label'>
+                Name
+                <input
+                    type="text"
+                    className="modal__input"
+                    value={name}
+                    onChange={(e) => {
+                        setName(e.target.value);
+                    }}
+                    required
+                />
+            </label>
+            <label className="modal__label">
+                Avatar URL
+                <input
+                    type="url"
+                    className="modal__input"
+                    value={avatar}
+                    onChange={(e) => {
+                        setAvatar(e.target.value);
+                    }}
+                    required
+                />
+            </label>
+        </ModalWithForm>
+    );
+}
+EditProfileModal.propTypes = {
+    closeActiveModal: PropTypes.func.isRequired,
+    activeModal: PropTypes.string.isRequired,
+    onEditProfile: PropTypes.func.isRequired,
+    isSaving: PropTypes.bool.isRequired,
+    currentUser: PropTypes.shape({
+        name: PropTypes.string,
+        avatar: PropTypes.string,
+    }),
+};

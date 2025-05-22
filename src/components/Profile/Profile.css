@@ -1,0 +1,45 @@
+.profile {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    gap: 116px;
+}
+.profile__sidebar {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.profile__clothesSection {
+    padding: 0;
+    margin: 0;
+}
+
+.profile__edit-button {
+    border: none;
+    background: none;
+    font-size: 20px;
+    font-family: "Cabinet Grotesk Bold", sans-serif;
+    margin: 0 0 8px 0;
+    cursor: pointer;
+}
+
+.profile__logout-button {
+    border: none;
+    background: none;
+    font-size: 20px;
+    font-family: "Cabinet Grotesk Bold", sans-serif;
+    cursor: pointer;
+}
+
+.clothesSection__list {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    list-style-type: none;
+    gap: 20px;
+    padding: 0;
+    margin: 0 0 80px 0;
+}

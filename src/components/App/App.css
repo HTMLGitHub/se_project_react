@@ -1,0 +1,12 @@
+@import url('../../vendor/fonts/style.css');
+
+.app {
+    background-color: #f3f3f3;
+}
+
+.app__content {
+    max-width: 1360px;
+    margin: 0 auto;
+    padding: 0 20px;
+    font-family: 'Cabinet Grotesk Normal', sans-serif;
+}
