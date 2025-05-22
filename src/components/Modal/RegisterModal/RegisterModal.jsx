@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import ModalWithForm from '../ModalWithForm/ModalWithForm';
 import "../ModalWithForm/ModalWithForm.css";
 import PropTypes from "prop-types";
-import { register } from '../../../utils/auth';
+import "./RegisterModal.css";
 
 export default function RegisterModal({
     closeActiveModal, 
