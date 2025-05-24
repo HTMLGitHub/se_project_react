@@ -35,7 +35,7 @@ This project was created with HTML, CSS, JS, and React. With the visual being fr
 
 ## Improvements
 
-Basic improvement will be adding clothing via the popup created. Perhaps adding additional functionality to allow for all weather conditions (brought in via API) to display in the banner. Also, have a profile editing, to change the image and name, as well as the location of the user. 
+I want to add geolocation to this project, so that any user, regardless of their location, can use this. Also, adding functionality to, when a modal pops up have the cursor in the first text field, and when the user hits 'tab' goes to the next field. Then have the user be able to upload an image from their computer, instead of a web address, for their profile picture. 
 
 ## Video
 
