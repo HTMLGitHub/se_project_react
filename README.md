@@ -30,7 +30,8 @@ If a non-registered 'user' attempts to view a profile page, or clothing items, w
 This project was created with HTML, CSS, JS, and React. With the visual being from Figma. 
 
 *GitHub*
-- [Link to GitHub Project](https://htmlgithub.github.io/se_project_react/)
+- [Link to GitHub Project](https://github.com/HTMLGitHub/se_project_react) ***Front End***
+- [Link to GitHub Project](https://github.com/HTMLGitHub/se_project_express) ***Back End***
 
 ## Improvements
 
