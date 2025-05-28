@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import "../ModalWithForm/ModalWithForm.css";
 import PropTypes from "prop-types";
+import {useFormAndValidation} from "../../../hooks/useFormAndValidation";
 
 export default function AddItemModal({
   closeActiveModal,
@@ -9,66 +10,15 @@ export default function AddItemModal({
   onAddItemModal,
   isSaving,
 }) {
-  const [name, setName] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
   const [weatherType, setWeatherType] = useState("");
-  const [nameError, setNameError] = useState("");
-  const [imageUrlError, setImageUrlError] = useState("");
-  const [weatherTypeError, setWeatherTypeError] = useState("");
-  const [isFormValid, setIsFormValid] = useState(false);
+  const { values, handleChange, errors, isValid, resetForm } = useFormAndValidation();
 
   useEffect(() => {
     if (activeModal === "add-garment") {
-      setName("");
-      setImageUrl("");
+      resetForm();
       setWeatherType("");
-      setNameError("");
-      setImageUrlError("");
-      setWeatherTypeError("");
-      setIsFormValid(false);
     }
   }, [activeModal]);
-
-  useEffect(() => {
-    validateForm();
-  }, [name, imageUrl, weatherType]);
-
-  const validateForm = () => {
-    let isValid = true;
-
-    if (name.length < 3 || name.length > 30) {
-      setNameError("(Name must be between 3 and 30 characters)");
-      isValid = false;
-    } else {
-      setNameError("");
-    }
-
-    const urlPattern = new RegExp(
-      "^(https?:\\/\\/)?" + // protocol
-        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|" + // domain name
-        "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
-        "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
-        "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
-        "(\\#[-a-z\\d_]*)?$",
-      "i" // fragment locator
-    );
-
-    if (!urlPattern.test(imageUrl)) {
-      setImageUrlError("(Please enter a valid URL)");
-      isValid = false;
-    } else {
-      setImageUrlError("");
-    }
-
-    if (weatherType === "") {
-      setWeatherTypeError("(No weather type selected)");
-      isValid = false;
-    } else {
-      setWeatherTypeError("");
-    }
-
-    setIsFormValid(isValid);
-  };
 
   const handleWeatherTypeChange = (e) => {
     setWeatherType(e.target.value);
@@ -77,8 +27,11 @@ export default function AddItemModal({
   const handleSubmit = (e) => {
     e.preventDefault();
     //Update the clothingItems array
-    if (isFormValid) {
-      onAddItemModal({ name, imageUrl, weatherType });
+    if (isValid && weatherType) {
+      onAddItemModal({
+        name: values.name,
+        imageUrl: values.imageUrl,
+        weatherType });
     }
   };
 
@@ -90,55 +43,53 @@ export default function AddItemModal({
         modalName="add-garment"
         closeActiveModal={closeActiveModal}
         onSubmit={handleSubmit}
-        isFormValid={isFormValid}
+        isFormValid={isValid && weatherType !== ""}
       >
         <label
           htmlFor="name"
-          className={`modal__label ${nameError ? "modal__label_error" : ""}`}
+          className={`modal__label ${errors.name ? "modal__label_error" : ""}`}
         >
-          Name {nameError && <span>{nameError}</span>}
+          Name {errors.name && <span>{errors.name}</span>}
           <input
             type="text"
+            name="name"
             className="modal__input modal__input_type_name"
             id="name"
             placeholder="Name"
             required
             minLength="3"
             maxLength="30"
-            onChange={(e) => {
-              setName(e.target.value);
-            }}
-            value={name}
+            onChange={handleChange}
+            value={values.name || ""}
           />
         </label>
 
         <label
           htmlFor="imageURL"
           className={`modal__label ${
-            imageUrlError ? "modal__label_error" : ""
+            errors.imageUrl ? "modal__label_error" : ""
           }`}
         >
-          Image {imageUrlError && <span>{imageUrlError}</span>}
+          Image {errors.imageUrl && <span>{errors.imageUrl}</span>}
           <input
             type="url"
+            name="imageUrl"
             className="modal__input modal__input_type_url"
             id="imageURL"
             placeholder="Image URL"
             required
-            onChange={(e) => {
-              setImageUrl(e.target.value);
-            }}
-            value={imageUrl}
+            onChange={handleChange}
+            value={values.imageUrl || ""}
           />
         </label>
         <fieldset className="modal__radio-buttons">
           <legend
             className={`modal__legend" ${
-              weatherTypeError ? "modal__label_error" : ""
+              !weatherType ? "modal__label_error" : ""
             }`}
           >
             Select the weather type{" "}
-            {weatherTypeError && <span>{weatherTypeError}</span>}
+            {!weatherType && <span>(No weather type selected)</span>}
           </legend>
           <div className="modal__radio-button">
             <label

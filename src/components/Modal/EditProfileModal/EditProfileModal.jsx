@@ -2,17 +2,19 @@ import React from "react";
 import "./EditProfileModal.css";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import PropTypes from "prop-types";
+import CurrentUserContext from "../../../Contexts/CurrentUserContext";
 
 export default function EditProfileModal({
     closeActiveModal, 
     activeModal,
     onEditProfile,
     isSaving,
-    currentUser,
 }) {
     //const [isEditModalOpen, setIsEditModalOpen] = React.useState(false);
     const [name, setName] = React.useState("");
     const [avatar, setAvatar] = React.useState("");
+
+    const currentUser = React.useContext(CurrentUserContext);
 
     React.useEffect(() => {
         if (activeModal === "edit-profile" && currentUser) {

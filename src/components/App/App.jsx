@@ -43,13 +43,26 @@ export default function App() {
   const location = useLocation();
 
   useEffect(() => {
-    if (location.state?.openRegisterModal) {
+    if (!isLoggedIn && location.state?.openRegisterModal) {
       setActiveModal("register");
       
       // Clear state so it does not reopen on every navigation
       window.history.replaceState({}, document.title);
     }
   }, [location]);
+
+  function handleSubmit(request, onSuccess) {
+    setIsSaving(true);
+    request()
+      .then((res) => {
+        if(onSuccess) {onSuccess(res);}
+        closeActiveModal();
+      })
+      .catch(console.error)
+      .finally(() => {
+        setIsSaving(false);
+      });
+  }
 
   const handleCardLike = ({_id, isLiked}) => {
     const token = localStorage.getItem("jwt");
@@ -64,19 +77,9 @@ export default function App() {
   }
 
   const handleEditProfile =({name, avatar}) => {
-    setIsSaving(true);
-    api.updateUserProfile({name, avatar}, token)
-      .then((userData) => {
-        setCurrentUser(userData);
-        closeActiveModal();
-      })
-      .catch((err) => {
-        console.error("Update profile error", err);
-      })
-      .finally(() => {
-        setIsSaving(false);
-      }
-    );
+    const makeRequest = () => api.updateUserProfile({name, avatar}, token);
+    const onSuccess = setCurrentUser;
+    handleSubmit(makeRequest, onSuccess);
   }
 
   const handleRegister = ({ name, avatar, email, password }) => {
@@ -124,7 +127,7 @@ export default function App() {
       })
       .then((userData) => {
         setCurrentUser(userData);
-        setActiveModal("");
+        closeActiveModal();
       })
       .catch((err) => {
         console.error("Login error", err);
@@ -149,20 +152,17 @@ export default function App() {
   }, []);
 
   const handleAddItemModal = ({ name, imageUrl, weatherType }) => {
-    setIsSaving(true);
-
     const newID = v4();
 
-    api.addItem({ _id: newID, name, weather: weatherType, imageUrl}, token)
-      .then((newItem) => {
-        setClothingItems((oldClothes) => [
-          newItem, ...oldClothes
-        ]);
-        setIsSaving(false);
-        // close the modal
-        closeActiveModal();
-      })
-      .catch(console.error);
+    const makeRequest = () => {
+      api.addItem({ _id: newID, name, weather: weatherType, imageUrl}, token);
+
+      const onSuccess = (newItem) => {
+        setClothingItems((oldClothes) => [newItem, ...oldClothes]);
+      }
+
+      handleSubmit(makeRequest, onSuccess);      
+    }
   };
 
   const handleCardClick = (card) => {
@@ -224,7 +224,7 @@ export default function App() {
     setIsLoggedIn(false);
     setCurrentUser({});
     setToken("");
-    setActiveModal("");
+    closeActiveModal();
     setClothingItems([]);
   }
 
@@ -310,7 +310,6 @@ export default function App() {
           closeActiveModal={closeActiveModal}
           onEditProfile={handleEditProfile}
           isSaving={isSaving}
-          currentUser={currentUser}
         />
       </div>
     </CurrentUserContext.Provider>

@@ -37,7 +37,10 @@ export default function ModalWithForm({
 
 ModalWithForm.propTypes = {
   children: PropTypes.node.isRequired,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.node,
+  ]).isRequired,
   buttonText: PropTypes.string.isRequired,
   activeModal: PropTypes.string.isRequired,
   closeActiveModal: PropTypes.func.isRequired,
