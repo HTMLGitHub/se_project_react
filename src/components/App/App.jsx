@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import "./App.css";
-import { v4 } from 'uuid';
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
@@ -19,7 +18,6 @@ import CurrentUserContext from "../../Contexts/CurrentUserContext";
 import EditProfileModal from "../Modal/EditProfileModal/EditProfileModal";
 import ProtectedRoute from "../ProtectedRoutes/ProtectedRoutes";
 import { set } from "mongoose";
-
 
 export default function App() {
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
@@ -39,17 +37,20 @@ export default function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [token, setToken] = useState("");
   const [registerError, setRegisterError] = useState("");
+  const [loginError, setLoginError] = useState("");
+  const [isAuthChecked, setIsAuthChecked] = useState(false);
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isLoggedIn && location.state?.openRegisterModal) {
+    if (isAuthChecked && !isLoggedIn && location.state?.openRegisterModal) {
       setActiveModal("register");
       
       // Clear state so it does not reopen on every navigation
       window.history.replaceState({}, document.title);
     }
-  }, [location]);
+  }, [location, isAuthChecked, isLoggedIn]);
 
   function handleSubmit(request, onSuccess) {
     setIsSaving(true);
@@ -58,7 +59,18 @@ export default function App() {
         if(onSuccess) {onSuccess(res);}
         closeActiveModal();
       })
-      .catch(console.error)
+      .catch(async (err) => {
+        if (typeof err === "string") {
+          console.error("Error:", err);
+        }
+        else if (err instanceof Response) {
+          const errorText = await err.text();
+          console.error("Server responded with:",errorText);
+        }
+        else {
+          console.error("Unexpected error:", err);
+        } 
+      })
       .finally(() => {
         setIsSaving(false);
       });
@@ -123,6 +135,7 @@ export default function App() {
         localStorage.setItem("jwt", res.token);
         setToken(res.token);
         setIsLoggedIn(true);
+        setLoginError("");
         return auth.checkToken(res.token);
       })
       .then((userData) => {
@@ -131,7 +144,7 @@ export default function App() {
       })
       .catch((err) => {
         console.error("Login error", err);
-        throw new Error("Invalid email or password");
+        setLoginError("Invalid email or password");
       });
   };
 
@@ -147,22 +160,26 @@ export default function App() {
         .catch((err) => {
           console.error("Token check failed", err);
           setIsLoggedIn(false);
+        }).finally(() => {
+          setIsAuthChecked(true);
         });
+    }
+    else {
+      setIsAuthChecked(true);
     }
   }, []);
 
   const handleAddItemModal = ({ name, imageUrl, weatherType }) => {
-    const newID = v4();
+    console.log("Submitting item:", { name, imageUrl, weather: weatherType });
 
-    const makeRequest = () => {
-      api.addItem({ _id: newID, name, weather: weatherType, imageUrl}, token);
+    const makeRequest = () => api.addItem({name, weather: weatherType, imageUrl}, token);
+  
 
-      const onSuccess = (newItem) => {
-        setClothingItems((oldClothes) => [newItem, ...oldClothes]);
-      }
-
-      handleSubmit(makeRequest, onSuccess);      
+    const onSuccess = (newItem) => {
+      setClothingItems((oldClothes) => [newItem, ...oldClothes]);
     }
+
+    handleSubmit(makeRequest, onSuccess);      
   };
 
   const handleCardClick = (card) => {
@@ -226,6 +243,8 @@ export default function App() {
     setToken("");
     closeActiveModal();
     setClothingItems([]);
+
+    navigate("/", { replace: true });
   }
 
   return (
@@ -294,6 +313,7 @@ export default function App() {
           onLogin={handleLogin}
           isSaving={isSaving}
           setActiveModal={setActiveModal}
+          loginError={loginError}
         />
 
         <RegisterModal

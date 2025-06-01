@@ -9,28 +9,24 @@ export default function LoginModal({
     onLogin,
     isSaving,
     setActiveModal,
+    loginError
 }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isFormValid, setIsFormValid] = useState(false);
-    const [errors, setErrors] = useState({});
 
     const isOpen = activeModal === "login";
 
     useEffect(() => {
-        if (activeModal === "login") {
+        if (isOpen) {
             setEmail("");
             setPassword("");
         }
-    }, [activeModal]);
+    }, [isOpen]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         onLogin({email, password})
-        .catch(() => {
-            setErrors({general: "Invalid email or password"});
-        }
-        );
     };
 
     useEffect(() => {
@@ -43,7 +39,6 @@ export default function LoginModal({
     , [email, password]);
 
     const resetForm = () => {
-        setErrors({});
         setEmail("");
         setPassword("");
     }; 
@@ -58,8 +53,8 @@ export default function LoginModal({
             title={
                 <span>
                     <span style={{color: "black"}}>Log In</span>
-                    {errors.general && (
-                        <span style={{color: "red"}}> &nbsp;{errors.general}</span>
+                    {loginError && (
+                        <span style={{color: "red"}}> &nbsp;{loginError}</span>
                     )}
                 </span>
             }
@@ -94,7 +89,7 @@ export default function LoginModal({
                 Email
                 <input
                     type="email"
-                    className={`modal__input modal__input_type_email ${errors.general ? " modal__error" : ""}`}
+                    className={`modal__input modal__input_type_email ${loginError ? " modal__error" : ""}`}
                     id="email"
                     placeholder="Email"
                     required
@@ -111,7 +106,7 @@ export default function LoginModal({
                 Password
                 <input
                     type="password"
-                    className={`modal__input modal__input_type_password ${errors.general ? " modal__error" : ""}`}
+                    className={`modal__input modal__input_type_password ${loginError ? " modal__error" : ""}`}
                     id="password"
                     placeholder="Password"
                     required

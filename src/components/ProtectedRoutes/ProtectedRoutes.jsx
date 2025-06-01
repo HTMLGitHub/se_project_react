@@ -19,7 +19,7 @@ export default function ProtectedRoute({
     if (!isLoggedIn && !anonymous) {
         // While redirecting to /signin, we set the location objects state.from property to the current location value.
         // This allows us to redirect the user back to the route they were trying to access after they have logged in.
-        return <Navigate to="/"  state={{from: location, openRegisterModal: true}}/>;
+        return <Navigate to="/"  replace state={{from: location, openRegisterModal: true}}/>;
     }
 
     // Otherwise, display the children components.
